@@ -1,9 +1,9 @@
 ---
-title: "Streamed Oblivious HTTP Messages"
-abbrev: "Streamed OHTTP"
+title: "Chunked Oblivious HTTP Messages"
+abbrev: "Chunked OHTTP"
 category: std
 
-docname: draft-ohai-streamed-ohttp-latest
+docname: draft-ohai-chunked-ohttp-latest
 submissiontype: IETF
 number:
 date:
@@ -26,7 +26,7 @@ author:
 
 This document defines a variant of the Oblivious HTTP message format that allows
 chunks of requests and responses to be encrypted and decrypted before an entire
-message is processed. This allows "streaming" of Oblivious HTTP messages, which
+message is processed. This allows "chunking" of Oblivious HTTP messages, which
 is particularly useful for handling very large messages or systems that process
 messages slowly.
 
@@ -50,24 +50,24 @@ reporting.
 However, some applications of Oblivious HTTP can benefit from being able to encrypt and
 decrypt parts of the messages in chunks. If a request or response can be processed by a
 receiver in separate parts, and is particularly large or will be generated slowly, then
-sending a stream of encrypted chunks can improve the performance of applications.
+sending a series of encrypted chunks can improve the performance of applications.
 
-This document defines a variant of Oblivious HTTP that supports streaming both requests
+This document defines a variant of Oblivious HTTP that supports handling both requests
 and responses in chunks, along with new media types.
 
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
 
-# Streamed Request and Response Media Types
+# Chunked Request and Response Media Types
 
-Streamed Oblivious HTTP defines different media than the non-streamed variant. These
-media types are "message/ohttp-streamed-req" (defined in {{iana-req}}) and
-"message/ohttp-streamed-res" (defined in {{iana-res}}).
+Chunked Oblivious HTTP defines different media than the non-chunked variant. These
+media types are "message/ohttp-chunked-req" (defined in {{iana-req}}) and
+"message/ohttp-chunked-res" (defined in {{iana-res}}).
 
 # Request Format {#request}
 
-Streamed OHTTP requests start with the same header as used for the non-streamed variant,
+Chunked OHTTP requests start with the same header as used for the non-chunked variant,
 which consists of a key ID, algorithm IDs, and the KEM shared secret. This header is
 followed by chunks of data protected with HPKE, each of which is preceded by a length field
 encoded as a variable-length integer (as defined in {{Section 16 of !QUIC=RFC9000}}).
@@ -75,12 +75,12 @@ The final chunk is indicated with a length of 0, which means it extends to the e
 the outer stream.
 
 ~~~
-Streamed Encapsulated Request {
-  Streamed Request Header (56 + 8 * Nenc),
-  Streamed Request Chunks (..),
+Chunked Encapsulated Request {
+  Chunked Request Header (56 + 8 * Nenc),
+  Chunked Request Chunks (..),
 }
 
-Streamed Request Header {
+Chunked Request Header {
   Key Identifier (8),
   HPKE KEM ID (16),
   HPKE KDF ID (16),
@@ -88,7 +88,7 @@ Streamed Request Header {
   Encapsulated KEM Shared Secret (8 * Nenc),
 }
 
-Streamed Request Chunks {
+Chunked Request Chunks {
   Non-Final Request Chunk (..),
   Final Request Chunk Indicator (i) = 0,
   HPKE-Protected Final Chunk (..),
@@ -99,23 +99,23 @@ Non-Final Request Chunk {
   HPKE-Protected Chunk (..),
 }
 ~~~
-{: #fig-enc-request title="Streamed Encapsulated Request Format"}
+{: #fig-enc-request title="Chunked Encapsulated Request Format"}
 
 The content of the HPKE-protected chunks is defined in {{request-encap}}.
 
 # Response Format {#response}
 
-Streamed OHTTP responses start with a nonce, followed by chunks of data protected with
+Chunked OHTTP responses start with a nonce, followed by chunks of data protected with
 an AEAD. The final chunk is indicated with a length of 0, which means it extends to
 the end of the outer stream.
 
 ~~~
-Streamed Encapsulated Response {
+Chunked Encapsulated Response {
   Response Nonce (Nk),
-  Streamed Response Chunks (..),
+  Chunked Response Chunks (..),
 }
 
-Streamed Response Chunks {
+Chunked Response Chunks {
   Non-Final Response Chunk (..),
   Final Response Chunk Indicator (i) = 0,
   AEAD-Protected Final Response Chunk (..),
@@ -126,12 +126,12 @@ Non-Final Response Chunk {
   AEAD-Protected Chunk (..),
 }
 ~~~
-{: #fig-enc-response title="Streamed Encapsulated Response Format"}
+{: #fig-enc-response title="Chunked Encapsulated Response Format"}
 
 # Encapsulation of Chunks
 
-The encapsulation of streamed Oblivious HTTP requests and responses uses
-the same approach as the non-streamed variant, with the difference that
+The encapsulation of chunked Oblivious HTTP requests and responses uses
+the same approach as the non-chunked variant, with the difference that
 the body of requests and responses are sealed and opened in chunks, instead
 of as a whole.
 
@@ -152,7 +152,7 @@ are preserved.
 ## Request Encapsulation {#request-encap}
 
 For requests, the setup of the HPKE context and the encrypted request header
-is the same as the non-streamed variant. This is the Streamed Request Header
+is the same as the non-chunked variant. This is the Chunked Request Header
 defined in {{request}}.
 
 ~~~
@@ -190,14 +190,14 @@ the context, so the order of chunks is protected.
 ## Response Encapsulation {#response-encap}
 
 For responses, the first piece of data sent back is the response nonce,
-as in the non-streamed variant.
+as in the non-chunked variant.
 
 ~~~
 response_nonce = random(max(Nn, Nk))
 ~~~
 
 Each chunk is sealed using the same AEAD key and AEAD nonce that are
-derived for the non-streamed variant, which are calculated as follows:
+derived for the non-chunked variant, which are calculated as follows:
 
 ~~~
 secret = context.Export("message/bhttp response", Nk)
@@ -248,14 +248,14 @@ correctly decrypts using the expected sentinel AAD, "final".
 
 This document updates the "Media Types" registry at
 <https://iana.org/assignments/media-types> to add the media types
-"message/ohttp-streamed-req" ({{iana-req}}), and
-"message/ohttp-streamed-res" ({{iana-res}}), following the procedures of
+"message/ohttp-chunked-req" ({{iana-req}}), and
+"message/ohttp-chunked-res" ({{iana-res}}), following the procedures of
 {{!RFC6838}}.
 
-## message/ohttp-streamed-req Media Type {#iana-req}
+## message/ohttp-chunked-req Media Type {#iana-req}
 
-The "message/ohttp-streamed-req" identifies an encrypted binary HTTP request
-that is transmitted using streamed chunks. This is a binary format that is
+The "message/ohttp-chunked-req" identifies an encrypted binary HTTP request
+that is transmitted using chunked chunks. This is a binary format that is
 defined in {{request}}.
 
 Type name:
@@ -264,7 +264,7 @@ Type name:
 
 Subtype name:
 
-: ohttp-streamed-req
+: ohttp-chunked-req
 
 Required parameters:
 
@@ -293,7 +293,7 @@ Published specification:
 Applications that use this media type:
 
 : Oblivious HTTP and applications that use Oblivious HTTP use this media type to
-  identify encapsulated binary HTTP requests sent in streamed chunks.
+  identify encapsulated binary HTTP requests sent in chunked chunks.
 
 Fragment identifier considerations:
 
@@ -330,10 +330,10 @@ Change controller:
 {: spacing="compact"}
 
 
-## message/ohttp-streamed-res Media Type {#iana-res}
+## message/ohttp-chunked-res Media Type {#iana-res}
 
 The "message/ohttp-res" identifies an encrypted binary HTTP response
-that is transmitted using streamed chunks. This is a binary format that
+that is transmitted using chunked chunks. This is a binary format that
 is defined in {{response}}.
 
 Type name:
@@ -342,7 +342,7 @@ Type name:
 
 Subtype name:
 
-: ohttp-streamed-res
+: ohttp-chunked-res
 
 Required parameters:
 
@@ -371,7 +371,7 @@ Published specification:
 Applications that use this media type:
 
 : Oblivious HTTP and applications that use Oblivious HTTP use this media type to
-  identify encapsulated binary HTTP responses sent in streamed chunks.
+  identify encapsulated binary HTTP responses sent in chunked chunks.
 
 Fragment identifier considerations:
 
