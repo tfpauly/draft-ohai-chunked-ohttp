@@ -25,10 +25,10 @@ author:
 --- abstract
 
 This document defines a variant of the Oblivious HTTP message format that allows
-chunks of requests and responses to be encrypted and decrypted before an entire
-message is processed. This allows "chunking" of Oblivious HTTP messages, which
-is particularly useful for handling very large messages or systems that process
-messages slowly.
+chunks of requests and responses to be encrypted and decrypted before the entire
+request or response is processed. This allows incremental processing of Oblivious
+HTTP messages, which is particularly useful for handling large messages or systems
+that process messages slowly.
 
 --- middle
 
