@@ -21,6 +21,10 @@ author:
     fullname: Tommy Pauly
     organization: Apple
     email: tpauly@apple.com
+ -
+    fullname: Martin Thomson
+    organization: Mozilla
+    email: mt@lowentropy.net
 
 --- abstract
 
@@ -52,12 +56,18 @@ decrypt parts of the messages in chunks. If a request or response can be process
 receiver in separate parts, and is particularly large or will be generated slowly, then
 sending a series of encrypted chunks can improve the performance of applications.
 
-This document defines a variant of Oblivious HTTP that supports handling both requests
-and responses in chunks, along with new media types.
+Incremental delivery of responses allows an Oblivious Gateway Resource to provide
+Informational (1xx) responses ({{Section 15.2 of ?HTTP=RFC9110}}.
+
+This document defines an optional message format for Oblivious HTTP that supports the
+progressive creation and processing of both requests and responses. New media types are
+defined for this purpose.
 
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
+
+Notational conventions from {{OHTTP}} are used in this document.
 
 # Chunked Request and Response Media Types
 
@@ -135,19 +145,21 @@ the same approach as the non-chunked variant, with the difference that
 the body of requests and responses are sealed and opened in chunks, instead
 of as a whole.
 
-Besides the chunks being individually encrypted and authenticated, the chunks
-protect two other pieces of information:
+The AEAD that protects both requests and responses protects individual chunks from
+modification or truncation. Additionally, chunk authentication protects two other
+pieces of information:
 
 1. the order of the chunks (the sequence number of each chunk), which is
 included in the nonce of each chunk.
 1. which chunk is the final chunk, which is indicated by a sentinel in the AAD
 of the final chunk.
 
-The format of the outer packaging that carries the chunks (the length fields,
-specifically) is not explicitly authenticated. AEADs already prevent truncation
-attacks on individual chunks. This also allows the chunks to be transported with
-different structures, and still be valid as long as the order and finality
-are preserved.
+The format of the outer packaging that carries the chunks (the length prefix for each
+chunk specifically) is not explicitly authenticated. This allows the chunks to be
+transported by alternative means, and still be valid as long as the order and
+finality are preserved.  In particular, the variable-length encoding used for lengths
+allows for different expressions of the same value, where the choice between
+equivalent encodings is not authenticated.
 
 ## Request Encapsulation {#request-encap}
 
@@ -160,7 +172,7 @@ hdr = concat(encode(1, key_id),
              encode(2, kem_id),
              encode(2, kdf_id),
              encode(2, aead_id))
-info = concat(encode_str("message/bhttp request"),
+info = concat(encode_str("message/bhttp chunked request"),
               encode(1, 0),
               hdr)
 enc, sctxt = SetupBaseS(pkR, info)
@@ -193,15 +205,16 @@ For responses, the first piece of data sent back is the response nonce,
 as in the non-chunked variant.
 
 ~~~
-response_nonce = random(max(Nn, Nk))
+entropy = max(Nn, Nk)
+response_nonce = random(entropy)
 ~~~
 
 Each chunk is sealed using the same AEAD key and AEAD nonce that are
 derived for the non-chunked variant, which are calculated as follows:
 
 ~~~
-secret = context.Export("message/bhttp response", Nk)
-response_nonce = random(max(Nn, Nk))
+secret = context.Export("message/bhttp chunked response", entropy)
+response_nonce = random(entropy)
 salt = concat(enc, response_nonce)
 prk = Extract(salt, secret)
 aead_key = Expand(prk, "key", Nk)
@@ -237,12 +250,22 @@ final_chunk = concat(sealed_final_chunk_len, sealed_final_chunk)
 
 # Security Considerations {#security}
 
-## Truncation Attacks
+The primary advantage of a chunked encoding is that chunked requests or responses can
+be generated or processed incrementally.  However, for a recipient in particular,
+processing an incomplete message can have security consequences.
 
-In order to avoid truncation attacks in which a relay tries to remove
-or drop any request or response chunks, receivers of chunks need to ensure
-that they only accept requests or responses that have a final chunk that
-correctly decrypts using the expected sentinel AAD, "final".
+The potential for message truncation is not a new concern for HTTP.  All versions of
+HTTP provide incremental delivery of messages.  For this use of Oblivious HTTP,
+incremental processing that might result in side-effects demands particular attention
+as Oblivious HTTP does not provide strong protection against replay attacks; see
+{{Section 6.5 of OHTTP}}.  Truncation might be the result of interference at the
+network layer, or by a malicious Oblivious Relay Resource.
+
+Endpoints that receive chunked messages can perform early processing if the risks are
+understood and accepted. Conversely, endpoints that depend on having a complete
+message MUST ensure that they do not consider a message complete until having
+received a chunk with a 0-valued length prefix, which was successfully decrypted
+using the expected sentinel value, "final", in the AAD.
 
 # IANA Considerations
 
@@ -255,7 +278,7 @@ This document updates the "Media Types" registry at
 ## message/ohttp-chunked-req Media Type {#iana-req}
 
 The "message/ohttp-chunked-req" identifies an encrypted binary HTTP request
-that is transmitted using chunked chunks. This is a binary format that is
+that is transmitted or processed in chunks. This is a binary format that is
 defined in {{request}}.
 
 Type name:
@@ -293,7 +316,7 @@ Published specification:
 Applications that use this media type:
 
 : Oblivious HTTP and applications that use Oblivious HTTP use this media type to
-  identify encapsulated binary HTTP requests sent in chunked chunks.
+  identify encapsulated binary HTTP requests that are incrementally generated or processed.
 
 Fragment identifier considerations:
 
@@ -333,7 +356,7 @@ Change controller:
 ## message/ohttp-chunked-res Media Type {#iana-res}
 
 The "message/ohttp-res" identifies an encrypted binary HTTP response
-that is transmitted using chunked chunks. This is a binary format that
+that is transmitted or processed in chunks. This is a binary format that
 is defined in {{response}}.
 
 Type name:
@@ -371,7 +394,7 @@ Published specification:
 Applications that use this media type:
 
 : Oblivious HTTP and applications that use Oblivious HTTP use this media type to
-  identify encapsulated binary HTTP responses sent in chunked chunks.
+  identify encapsulated binary HTTP responses that are incrementally generated or processed.
 
 Fragment identifier considerations:
 
