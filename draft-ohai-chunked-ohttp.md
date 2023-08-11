@@ -57,7 +57,7 @@ receiver in separate parts, and is particularly large or will be generated slowl
 sending a series of encrypted chunks can improve the performance of applications.
 
 Incremental delivery of responses allows an Oblivious Gateway Resource to provide
-Informational (1xx) responses ({{Section 15.2 of ?HTTP=RFC9110}}.
+Informational (1xx) responses ({{Section 15.2 of ?HTTP=RFC9110}}).
 
 This document defines an optional message format for Oblivious HTTP that supports the
 progressive creation and processing of both requests and responses. New media types are
