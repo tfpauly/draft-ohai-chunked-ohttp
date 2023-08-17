@@ -63,6 +63,33 @@ This document defines an optional message format for Oblivious HTTP that support
 progressive creation and processing of both requests and responses. New media types are
 defined for this purpose.
 
+## Applicability
+
+Like the non-chunked variant, chunked Oblivious HTTP has limited applicability
+as described in {{Section 2.1 of OHTTP}}, and requires the use of a willing
+Oblivious Relay Resource and Oblivious Gateway Resource.
+
+Chunked Oblivious HTTP is intended to be used in cases for where the privacy
+properties of Oblivious HTTP are needed — specifically, removing linkage
+at the transport layer between separate HTTP requests — but incremental
+processing is also needed for performance or functionality.
+
+One specific functional capability that requires chunked Oblivious HTTP
+is support for Informational (1xx) responses
+({{Section 15.2 of ?HTTP=RFC9110}}).
+
+In order to be useful, the content of chunked Oblivious HTTP needs to be
+possible to process incrementally. Since incremental processing means that the
+message might end up being truncated, for example in the case of an error on the
+underlying transport, applications also need to be prepared to safely handle incomplete
+messages (see {{security}} for more discussion). Applications that use the Indeterminate
+format of Binary HTTP ({{Section 3.2 of !BHTTP=RFC9292}}) are well-suited
+to using chunked Oblivious HTTP.
+
+Chunked Oblivious HTTP is not intended to be used for long-lived sessions
+between clients and servers that might build up state, or as a replacement
+for a proxied TLS session.
+
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
