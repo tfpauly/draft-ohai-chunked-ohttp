@@ -79,10 +79,10 @@ media types are "message/ohttp-chunked-req" (defined in {{iana-req}}) and
 
 Chunked OHTTP requests start with the same header as used for the non-chunked variant,
 which consists of a key ID, algorithm IDs, and the KEM shared secret. This header is
-followed by chunks of data protected with HPKE, each of which is preceded by a length field
-encoded as a variable-length integer (as defined in {{Section 16 of !QUIC=RFC9000}}).
-The final chunk is indicated with a length of 0, which means it extends to the end of
-the outer stream.
+followed by chunks of data protected with HPKE, each of which is preceded by a
+variable-length integer (as defined in {{Section 16 of !QUIC=RFC9000}})
+that indicates the length of the chunk. The final chunk is preceded by a length
+field with the value 0, which means the chunk extends to the end of the outer stream.
 
 ~~~
 Chunked Encapsulated Request {
@@ -116,8 +116,9 @@ The content of the HPKE-protected chunks is defined in {{request-encap}}.
 # Response Format {#response}
 
 Chunked OHTTP responses start with a nonce, followed by chunks of data protected with
-an AEAD. The final chunk is indicated with a length of 0, which means it extends to
-the end of the outer stream.
+an AEAD. Each chunk is preceded by a variable-length integer that indicates the length
+of the chunk. The final chunk is preceded by a length field with the value 0, which means
+the chunk extends to the end of the outer stream.
 
 ~~~
 Chunked Encapsulated Response {
