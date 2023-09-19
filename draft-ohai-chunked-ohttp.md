@@ -242,7 +242,6 @@ derived for the non-chunked variant, which are calculated as follows:
 
 ~~~
 secret = context.Export("message/bhttp chunked response", entropy_len)
-response_nonce = random(entropy_len)
 salt = concat(enc, response_nonce)
 prk = Extract(salt, secret)
 aead_key = Expand(prk, "key", Nk)
