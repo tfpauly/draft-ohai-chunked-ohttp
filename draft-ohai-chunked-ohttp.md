@@ -233,15 +233,15 @@ For responses, the first piece of data sent back is the response nonce,
 as in the non-chunked variant.
 
 ~~~
-entropy = max(Nn, Nk)
-response_nonce = random(entropy)
+entropy_len = max(Nn, Nk)
+response_nonce = random(entropy_len)
 ~~~
 
 Each chunk is sealed using the same AEAD key and AEAD nonce that are
 derived for the non-chunked variant, which are calculated as follows:
 
 ~~~
-secret = context.Export("message/bhttp chunked response", entropy)
+secret = context.Export("message/bhttp chunked response", entropy_len)
 salt = concat(enc, response_nonce)
 prk = Extract(salt, secret)
 aead_key = Expand(prk, "key", Nk)
