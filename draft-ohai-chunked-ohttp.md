@@ -382,7 +382,7 @@ Change controller:
 
 ## message/ohttp-chunked-res Media Type {#iana-res}
 
-The "message/ohttp-res" identifies an encrypted binary HTTP response
+The "message/ohttp-chunked-res" identifies an encrypted binary HTTP response
 that is transmitted or processed in chunks. This is a binary format that
 is defined in {{response}}.
 
