@@ -248,15 +248,15 @@ aead_key = Expand(prk, "key", Nk)
 aead_nonce = Expand(prk, "nonce", Nn)
 ~~~
 
-The sender also maintains a counter of chunks, which is initialized
-to 0.
+The sender also maintains a counter of chunks, which is set to 0 for the first
+chunk an incremented by 1 after encoding each chunk.
 
 ~~~
 counter = 0
 ~~~
 
-The nonce additionally is XORed with a counter to indicate the order
-of the chunks. For non-final chunks, the AAD is empty.
+The AEAD nonce is XORed with the counter for encrypting (and decrypting) each
+chunk.  For non-final chunks, the AAD is empty.
 
 ~~~
 chunk_nonce = aead_nonce XOR encode(Nn, counter)
