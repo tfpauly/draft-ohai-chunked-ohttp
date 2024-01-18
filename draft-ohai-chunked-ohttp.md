@@ -315,7 +315,10 @@ in HTTP, which has the client withhold the body of a request until it receives a
 highlights the risks involved in the use of this chunked encoding to adapt an
 existing HTTP-based interaction to use Oblivious HTTP as such an adaptation
 might not achieve expected privacy outcomes.
-
+In order to prevent the Oblivious Gateway Resource from observing the round trip time
+to the client, client implementations can choose to not base the sending of request chunks based
+on received response chunks. These interactions can still benefit from chunked processing,
+without incurring additional observability risks.
 # IANA Considerations
 
 This document updates the "Media Types" registry at
