@@ -294,6 +294,28 @@ message MUST ensure that they do not consider a message complete until having
 received a chunk with a 0-valued length prefix, which was successfully decrypted
 using the expected sentinel value, "final", in the AAD.
 
+## Interactivity and Privacy
+
+Without chunking, Oblivious HTTP involves a single request and response, with no
+further interactivity.  Using a chunked variant at both Client and Oblivious
+Gateway Resource creates the possibility that an exchange could lead to multiple
+rounds of interaction.  Information from early chunks from a peer could
+influence how an endpoint constructs later chunks of their message.
+
+An Oblivious Gateway Resource could be able to observe the round trip time to
+the Client if the Client conditions the timing or content of chunks on what it
+receives in a response.
+
+Client implementations therefore need to be aware of the possibility that
+processing chunks might result in observable interactivity that could reduces
+the privacy protection that the protocol could otherwise provide.  Interactivity
+that is deliberate might be acceptable. For instance, the 100-continue feature
+in HTTP, which has the client withhold the body of a request until it receives a
+100 Informational response, is not possible without chunked encoding.  This
+highlights the risks involved in the use of this chunked encoding to adapt an
+existing HTTP-based interaction to use Oblivious HTTP as such an adaptation
+might not achieve expected privacy outcomes.
+
 # IANA Considerations
 
 This document updates the "Media Types" registry at
