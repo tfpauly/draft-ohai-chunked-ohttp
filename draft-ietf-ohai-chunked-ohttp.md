@@ -3,7 +3,7 @@ title: "Chunked Oblivious HTTP Messages"
 abbrev: "Chunked OHTTP"
 category: std
 
-docname: draft-ohai-chunked-ohttp-latest
+docname: draft-ietf-ohai-chunked-ohttp-latest
 submissiontype: IETF
 number:
 date:
