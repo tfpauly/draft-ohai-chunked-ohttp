@@ -1,17 +1,17 @@
 # Chunked Oblivious HTTP Messages
 
-This is the working area for the individual Internet-Draft, "Chunked Oblivious HTTP Messages".
+This is the working area for the OHAI Working Group Internet-Draft, "Chunked Oblivious HTTP Messages".
 
-* [Editor's Copy](https://tfpauly.github.io/draft-ohai-chunked-ohttp/#go.draft-ohai-chunked-ohttp.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ohai-chunked-ohttp)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-ohai-chunked-ohttp)
-* [Compare Editor's Copy to Individual Draft](https://tfpauly.github.io/draft-ohai-chunked-ohttp/#go.draft-ohai-chunked-ohttp.diff)
+* [Editor's Copy](https://ietf-wg-ohai.github.io/draft-ohai-chunked-ohttp/#go.draft-ietf-ohai-chunked-ohttp.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-ohai-chunked-ohttp)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-ietf-ohai-chunked-ohttp)
+* [Compare Editor's Copy to Individual Draft](https://ietf-wg-ohai.github.io/draft-ohai-chunked-ohttp/#go.draft-ietf-ohai-chunked-ohttp.diff)
 
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/tfpauly/draft-ohai-chunked-ohttp/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/blob/main/CONTRIBUTING.md).
 
 Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.
