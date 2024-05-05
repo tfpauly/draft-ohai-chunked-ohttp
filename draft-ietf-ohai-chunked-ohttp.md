@@ -319,6 +319,7 @@ In order to prevent the Oblivious Gateway Resource from observing the round trip
 to the client, client implementations can choose to not base the sending of request chunks based
 on received response chunks. These interactions can still benefit from chunked processing,
 without incurring additional observability risks.
+
 # IANA Considerations
 
 This document updates the "Media Types" registry at
