@@ -225,12 +225,16 @@ final_chunk = concat(sealed_final_chunk_len, sealed_final_chunk)
 ~~~
 
 HPKE already maintains a sequence number for sealing operations as part of
-the context, so the order of chunks is protected.
+the context, so the order of chunks is protected. HPKE will produce an
+error if the sequence number overflows, which puts a limit on the number
+of chunks that can be sent in a request.
 
 ## Response Encapsulation {#response-encap}
 
 For responses, the first piece of data sent back is the response nonce,
-as in the non-chunked variant.
+as in the non-chunked variant. As in the non-chunked variant, the length
+of the nonce is `max(Nn, Nk)`, where `Nn` and `Nk` are the length of
+the AEAD nonce and key.
 
 ~~~
 entropy_len = max(Nn, Nk)
@@ -274,6 +278,11 @@ sealed_final_chunk = Seal(aead_key, chunk_nonce, "final", chunk)
 sealed_final_chunk_len = varint_encode(len(sealed_final_chunk))
 final_chunk = concat(sealed_final_chunk_len, sealed_final_chunk)
 ~~~
+
+If the counter reached the maximum value that can be held in an
+integer with `Nn` bits (that maximum being `2^Nn`), where `Nn` is the
+length of the AEAD nonce, the `chunk_nonce` would wrap and be reused.
+Therefore, the response MUST NOT use `2^Nn` or more chunks.
 
 # Security Considerations {#security}
 
