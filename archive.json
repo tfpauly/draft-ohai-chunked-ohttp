@@ -1,0 +1,935 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2024-07-16T00:51:16.137639+00:00",
+  "repo": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    },
+    {
+      "name": "discuss",
+      "description": "",
+      "color": "d93f0b"
+    },
+    {
+      "name": "ready for text",
+      "description": "",
+      "color": "BFDF0F"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDOJtaXUM5s53rI",
+      "title": "Rename streamed",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/1",
+      "state": "CLOSED",
+      "author": "tfpauly",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Rename streamed -> chunked?",
+      "createdAt": "2023-07-28T21:31:36Z",
+      "updatedAt": "2023-07-31T22:35:45Z",
+      "closedAt": "2023-07-31T22:35:45Z",
+      "comments": []
+    },
+    {
+      "number": 2,
+      "id": "I_kwDOJtaXUM5s54Oy",
+      "title": "Expand applicability explanation",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/2",
+      "state": "CLOSED",
+      "author": "tfpauly",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- Explain when to use this instead of non-chunked OHTTP\r\n- Explain when to use this instead of MASQUE\r\n  - Specifically:\r\n  - OHTTP relay has a strong trust relationship with the gateway; forward proxies don't have that\r\n  - Talking to a server deeper in HTTP load balancer networks, etc, is more easily accessible with OHTTP",
+      "createdAt": "2023-07-28T21:34:37Z",
+      "updatedAt": "2023-08-17T15:42:32Z",
+      "closedAt": "2023-08-17T15:42:32Z",
+      "comments": []
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOJtaXUM5s-OaN",
+      "title": "Consider restriction to only allow response after complete request",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/3",
+      "state": "OPEN",
+      "author": "tfpauly",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "In order to simplify analysis and deviate less from the original design of OHTTP, consider adding a restriction to only allow response after complete request.",
+      "createdAt": "2023-07-31T02:21:13Z",
+      "updatedAt": "2023-09-19T00:17:34Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "body": "One risk here is that having multiple back-and-forth interactions reveals can reveal timing information to the gateway.\r\n\r\nOne case where this may still be allowed is Expect 100-continue.",
+          "createdAt": "2023-08-17T03:23:09Z",
+          "updatedAt": "2023-08-17T03:23:09Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm not sure that this is necessary.  I would instead signpost the risks involved very clearly.\r\n\r\nFundamentally, the goal of OHTTP is to enable the creation of an isolated context.  What happens within that context could be arbitrarily complex, provided that the actions taken do not draw on information outside of that context.  So you can even string together multiple OHTTP requests, if you are prepared to accept some of the limitations of that.  This 100-continue thing leaks too, but maybe that leakage is acceptable.",
+          "createdAt": "2023-08-17T03:28:19Z",
+          "updatedAt": "2023-08-17T03:28:19Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I should mention that any interactive use of OHTTP (the date correction stuff, 100-continue) reveals RTT to the client, which is a privacy leak.  That's worth mentioning as an additional concern even if you successfully isolate the interaction in all other ways.",
+          "createdAt": "2023-08-17T03:38:35Z",
+          "updatedAt": "2023-08-17T03:38:35Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "On balance, having a mechanism to prevent premature use of chunks (i.e., using chunks before the whole object has been authenticated) feels like the right outcome here. I don't know if signposts would be enough. ",
+          "createdAt": "2023-09-18T20:38:21Z",
+          "updatedAt": "2023-09-18T20:38:21Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Isn't that mechanism just \"don't use this chunking stuff\"?",
+          "createdAt": "2023-09-19T00:16:34Z",
+          "updatedAt": "2023-09-19T00:16:34Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "No, I don't think so. I can certainly imagine applications misusing this for performance reasons. It's like the equivalent of using AEAD plaintext before actually checking the tag for integrity.",
+          "createdAt": "2023-09-19T00:17:33Z",
+          "updatedAt": "2023-09-19T00:17:33Z"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOJtaXUM5uCXWI",
+      "title": "Negotiating use",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/5",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "discuss"
+      ],
+      "body": "We need a section on how a client or gateway might indicate that they are able to use this.\r\n\r\nUse of something like this falls under the general configuration of a gateway, so that consistency requirements apply.  If clients have an inconsistent view of support for chunking, then they will be more identifiable as a result.  We need language about that too.",
+      "createdAt": "2023-08-11T02:32:49Z",
+      "updatedAt": "2024-03-11T19:38:32Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 7,
+      "id": "I_kwDOJtaXUM5uRM1C",
+      "title": "Maximum chunk size",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/7",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "discuss"
+      ],
+      "body": "Varints for lengths have this problem where they can be very large, requiring a lot of memory. Even TLS has this problem and it only has 16k chunks. It would be good to have some way to negotiate chunk size. This ends up being a little weird though.\r\n\r\nIf you have too many size options, that leaks client details in a way that might be identifying.\r\n\r\nIf you negotiate on the outside of the encapsulation, the relay has to know to forward it. If you negotiate on the inside, it might end up going to the target and not the gateway.\r\n\r\nThat is, this is much like #5: we will need to be careful.",
+      "createdAt": "2023-08-14T15:20:37Z",
+      "updatedAt": "2024-03-11T19:38:32Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I wonder if this needs to be explicitly addressed? If we look at OHTTP _without_ chunking, there is no max size (other than the number of bytes that can be in the outer stream/body. If we view chunking as a way to allow incremental processing of something that otherwise would be one larger OHTTP message, it will always be strictly less memory than it would have been otherwise.\r\n\r\nIt is a good point that a particular chunk size could fingerprint a client if it was very consistent; similarly, the chunk size could reveal information to the relay about the contents (although the overall message size can too).",
+          "createdAt": "2023-08-14T15:41:15Z",
+          "updatedAt": "2023-08-14T15:41:15Z"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "I_kwDOJtaXUM5xWYCa",
+      "title": "Maximum number of chunks",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/9",
+      "state": "CLOSED",
+      "author": "chris-wood",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "ready for text"
+      ],
+      "body": "This is trivial, but the draft should note that there's a maximum number of chunks permissible before things break. For responses in particular, 2^Nn chunks will yield (key, nonce) reuse, which should be avoided.",
+      "createdAt": "2023-09-18T20:29:27Z",
+      "updatedAt": "2024-07-08T22:05:06Z",
+      "closedAt": "2024-07-08T22:05:06Z",
+      "comments": []
+    },
+    {
+      "number": 10,
+      "id": "I_kwDOJtaXUM5xWYx1",
+      "title": "Analysis",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/10",
+      "state": "OPEN",
+      "author": "chris-wood",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Since the design is basically HPKE for requests and TLS record layer for responses, I wonder if the document would benefit from leaning on existing analyses for these things, and [this](https://www.microsoft.com/en-us/research/wp-content/uploads/2017/08/191.pdf) in particular.",
+      "createdAt": "2023-09-18T20:31:18Z",
+      "updatedAt": "2023-09-18T20:31:18Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 12,
+      "id": "I_kwDOJtaXUM5xWaVq",
+      "title": "response_nonce is set twice",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/12",
+      "state": "CLOSED",
+      "author": "chris-wood",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft reads:\r\n\r\n```\r\nFor responses, the first piece of data sent back is the response nonce, as in the non-chunked variant.[\u00b6](https://tfpauly.github.io/draft-ohai-chunked-ohttp/draft-ohai-chunked-ohttp.html#section-6.2-1)\r\n\r\nentropy = max(Nn, Nk)\r\nresponse_nonce = random(entropy)\r\n```\r\n\r\nAnd then:\r\n\r\n```\r\nEach chunk is sealed using the same AEAD key and AEAD nonce that are derived for the non-chunked variant, which are calculated as follows:[\u00b6](https://tfpauly.github.io/draft-ohai-chunked-ohttp/draft-ohai-chunked-ohttp.html#section-6.2-3)\r\n\r\nsecret = context.Export(\"message/bhttp chunked response\", entropy)\r\nresponse_nonce = random(entropy)\r\nsalt = concat(enc, response_nonce)\r\nprk = Extract(salt, secret)\r\naead_key = Expand(prk, \"key\", Nk)\r\naead_nonce = Expand(prk, \"nonce\", Nn)\r\n```\r\n\r\nI don't think the intended effect is to have `response_nonce` be different in the header and in the key derivation step. The current text seems to imply that the header first carries a randomly generated `response_nonce`, and then each subsequent response chunk is encrypted using a different `response_nonce`. \r\n\r\nProbably the simple thing to do here is just drop the second `response_nonce` derivation, like so:\r\n\r\n```diff\r\n secret = context.Export(\"message/bhttp chunked response\", entropy)\r\n-response_nonce = random(entropy)\r\n salt = concat(enc, response_nonce)\r\n prk = Extract(salt, secret)\r\n aead_key = Expand(prk, \"key\", Nk)\r\n```",
+      "createdAt": "2023-09-18T20:35:46Z",
+      "updatedAt": "2023-09-19T02:18:04Z",
+      "closedAt": "2023-09-19T02:18:04Z",
+      "comments": [
+        {
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "body": "So there are two nonces involved here:\r\n\r\n1. The nonce used to diversify keying material for responses.  This exists as defense in depth against the use of a two-time pad in the event that a request is replayed.\r\n2. The AEAD (base) nonce, which is used by the AEAD in the usual way.  Unlike regular OHTTP, this is overlaid with a counter using the same method as in TLS.\r\n\r\nThis is deliberate and I think that we need both.",
+          "createdAt": "2023-09-19T00:15:15Z",
+          "updatedAt": "2023-09-19T00:15:15Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Right, there are two nonces, but as the diff above suggests, `response_nonce` (the one used for diversifying key material) is currently confusingly specified. Is it computed once or twice? I'm not suggesting to remove the `aead_nonce`.",
+          "createdAt": "2023-09-19T00:16:39Z",
+          "updatedAt": "2023-09-19T00:16:39Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Oh, I see.  I need more sleep.  Yes.",
+          "createdAt": "2023-09-19T00:17:50Z",
+          "updatedAt": "2023-09-19T00:17:50Z"
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "id": "I_kwDOJtaXUM5xWbUS",
+      "title": "Test vectors",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/13",
+      "state": "OPEN",
+      "author": "chris-wood",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "ready for text"
+      ],
+      "body": "We should probably have some!",
+      "createdAt": "2023-09-18T20:38:34Z",
+      "updatedAt": "2024-03-11T19:40:20Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 16,
+      "id": "I_kwDOJtaXUM58aSQd",
+      "title": "Pseudocode for decoding",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/16",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "ready for text"
+      ],
+      "body": "Decoding is a tiny bit more fiddly than encoding.  It might be worth adding an appendix with the appropriate logic.\r\n\r\n(I still need to implement it myself, FWIW.)",
+      "createdAt": "2024-01-18T00:50:59Z",
+      "updatedAt": "2024-03-11T19:38:56Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 18,
+      "id": "I_kwDOJtaXUM58gdP2",
+      "title": "Describe large upload use case",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/18",
+      "state": "OPEN",
+      "author": "tfpauly",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Currently, OHTTP has no maximum size, so a server that is willing to accept large requests is forced to buffer unbounded messages before knowing if they can be decrypted, or if they will be served. Chunking allows the server to validate the HPKE encryption and request headers in the first chunk before accepting the rest of the request. Chunking also allows endpoints to write data out after decrypting, instead of holding the entire message in memory.",
+      "createdAt": "2024-01-18T18:59:51Z",
+      "updatedAt": "2024-01-18T18:59:51Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 19,
+      "id": "I_kwDOJtaXUM6D2fWp",
+      "title": "incremental forwarding of HTTP messages is not a guaranteed property of HTTP semantics",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/19",
+      "state": "OPEN",
+      "author": "kazuho",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "discuss"
+      ],
+      "body": "Chunked Oblivious HTTP Messages relies on incremental delivery of HTTP request; as the client sends some chunks of an HTTP POST request, the server is expected to respond to them by sending chunks of an HTTP response.\r\n\r\nThis approach contradicts to what HTTP semantics states and has interoperability issues with proxies that buffer the entire request before starting to forward the request to the backend servers.\r\n\r\nSpecifically, [RFC 9110 section 7.6](https://datatracker.ietf.org/doc/html/rfc9110#name-message-forwarding) states:\r\n> An HTTP message can be parsed as a stream for incremental processing or forwarding downstream. However, senders and recipients cannot rely on incremental delivery of partial messages, since some implementations will buffer or delay message forwarding for the sake of network efficiency, security checks, or content transformations.\r\n\r\nWhen these buffering intermediaries are involved, Chunked Oblivious HTTP Messages will not work, and clients would see timeouts.\r\n\r\nConsidering that what we are developing is an application of HTTP, it would make sense to design the new protocol in a way that it does not add restrictions to HTTP semantics.\r\n\r\nOne way of moving forward would be to use extended CONNECT instead of HTTP POST for opening the bi-directional stream on which we exchange Chunked OHTTP Messages.",
+      "createdAt": "2024-03-28T00:15:51Z",
+      "updatedAt": "2024-07-04T02:37:46Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Another option is to acknowledge that intermediaries with these properties that are involved in a particular deployment can be identified and fixed.  I understand that Tommy discovered a few like this after implementing and deploying this.\r\n\r\nThe other thing is that this doesn't necessarily invalidate the design.  The goal is to enable incremental processing, which can be achieved with buffering.  What is not possible is things like 100-continue (which remains a misfeature for the reasons you describe, at least in my mind).",
+          "createdAt": "2024-03-28T04:58:23Z",
+          "updatedAt": "2024-03-28T04:58:23Z"
+        },
+        {
+          "author": "kazuho",
+          "authorAssociation": "NONE",
+          "body": "@martinthomson \r\n> Another option is to acknowledge that intermediaries with these properties that are involved in a particular deployment can be identified and fixed. I understand that Tommy discovered a few like this after implementing and deploying this.\r\n\r\nI'm not sure if such an approach would be possible or beneficial for the ecosystem.\r\n\r\nHTTP/2 and HTTP/3 allows clients a issue large number of requests at once (e.g., 100). But servers often do not process all requests in parallel. It is often the case that the number of requests that are processed concurrently is rather small (e.g., 10), while other requests are \"buffered.\" By doing so, the backend applications are protected from DoS attacks, while the bandwidth of the connection is fully utilized.\r\n\r\nTo paraphrase, the ability to buffer requests is a key pillar of HTTP/2 and 3. It is not a misfeature.\r\n\r\nCONNECT and extended CONNECT are exceptions. That is fine, because every intermediary would recognize that they are exceptions. When receiving too many requests at once, they have the option to respond with 429 Too Many Requests.\r\n\r\nBut POST does not work like that. Proxies are designed to be transparent to the content-type being used.\r\n\r\nThe problem with current design is that it requires proxies to have a list of mime types that have to be processed like CONNECT. I do not see a reason to choose such an approach when we can choose to use extended CONNECT that provides the necessary semantics.",
+          "createdAt": "2024-03-28T08:57:45Z",
+          "updatedAt": "2024-03-28T09:01:04Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm saying 100-continue is the misfeature, not the buffering.\r\n\r\nAn arrangement like you describe is beneficial, but it might not be always the right answer, depending on the backend capabilities and the application.  OHTTP relays do provide some DoS mitigation, but maybe limiting request volume is not the axis along which the relay needs to operate its protections.\r\n\r\nI'm not suggesting that this is a per-content-type thing, but a per-resource or really per-service thing.  If anything at all.  The design works well enough with buffering at an intermediary (modulo 100-continue and other similar arrangements).  I'd go futher and say that there are privacy benefits to buffering.",
+          "createdAt": "2024-03-29T01:24:37Z",
+          "updatedAt": "2024-03-29T01:24:37Z"
+        },
+        {
+          "author": "kazuho",
+          "authorAssociation": "NONE",
+          "body": "> I'm not suggesting that this is a per-content-type thing, but a per-resource or really per-service thing. If anything at all. The design works well enough with buffering at an intermediary (modulo 100-continue and other similar arrangements).\r\n\r\nFirstly, the design does not work well with buffering, at least with intermediaries that buffer the whole request or a non-negligible amount of bytes before starting to forward request to the backend. As stated, such behavior is common among the intermediaries.\r\n\r\nSecondly, this is the first time I've heard HTTP clients complaining about the buffering behavior. That makes me believe that Chunked OHTTP is asking for an exception, rather than turning on a per-resource or per-service config.",
+          "createdAt": "2024-03-29T01:33:17Z",
+          "updatedAt": "2024-03-29T01:33:42Z"
+        },
+        {
+          "author": "kazuho",
+          "authorAssociation": "NONE",
+          "body": "If I may ask, what is the benefit of choosing HTTP POST over extended CONNECT or websockets, when use of HTTP POST adds restrictions to HTTP semantics and has actual interoperability issues? In https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/19#issuecomment-2024396101 you state you've already seen them.",
+          "createdAt": "2024-03-29T01:43:09Z",
+          "updatedAt": "2024-03-29T01:43:09Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "body": "In talking with others (at your employer, even), POST is considerably less complex to deploy than CONNECT.  At the point you engage CONNECT, then MASQUE starts looking a whole lot better.  It's much more expensive and the ends, but still.\r\n\r\n> Secondly, this is the first time I've heard HTTP clients complaining about the buffering behavior. \r\n\r\nThat's not coming from me.  Buffering at intermediaries is mostly not a problem from my perspective.",
+          "createdAt": "2024-03-29T01:56:22Z",
+          "updatedAt": "2024-03-29T01:56:22Z"
+        },
+        {
+          "author": "kazuho",
+          "authorAssociation": "NONE",
+          "body": "@martinthomson \r\n> In talking with others (at your employer, even), POST is considerably less complex to deploy than CONNECT. At the point you engage CONNECT, then MASQUE starts looking a whole lot better. It's much more expensive and the ends, but still.\r\n\r\nThat sounds like we made the wrong choice with masque (and other extensions being developed on top of extended CONNECT; e.g., connect-tcp). That is because we could equally argue that masque could have been developed on top of HTTP POST, with a per-resource or per-service config in the intermediaries to not buffer the bytes for too long?\r\n\r\nAre you actually suggesting that, or is there a reason to believe the situation is different with Chunked OHTTP?\r\n\r\nPS. Re my employer, I think our stance is that POST is easier in the short term, but the long term consequences could be different (though the answer might depend on who you asked as well as when).",
+          "createdAt": "2024-03-29T01:59:54Z",
+          "updatedAt": "2024-03-29T02:09:11Z"
+        },
+        {
+          "author": "kazuho",
+          "authorAssociation": "NONE",
+          "body": "FWIW, [RFC 9205 section 3.1](https://www.rfc-editor.org/rfc/rfc9205.html#name-generic-semantics) states:\r\n> This split between generic and application-specific semantics allows an HTTP message to be handled by common software (e.g., HTTP servers, intermediaries, client implementations, and caches) without requiring those implementations to understand the application in use. It also allows people to leverage their knowledge of HTTP semantics without needing specialised knowledge of a particular application.\r\n> \r\n> Therefore, applications that use HTTP MUST NOT redefine, **refine**, or overlay the semantics of generic protocol elements such as methods, status codes, or existing header fields. Instead, they should focus their specifications on protocol elements that are specific to that application -- namely, their HTTP resources.\r\n\r\nI wonder if the current state of Chunked OHTTP requiring intermediaries to start forwarding chunks of requests before receiving entire request violates this MUST (cc @mnot).",
+          "createdAt": "2024-03-29T02:22:15Z",
+          "updatedAt": "2024-03-29T02:22:15Z"
+        },
+        {
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "body": "My initial inclination is to interpret this how @martinthomson does \u2014 essentially, that while POST clients \"cannot rely on incremental delivery\" in general, specific services can indeed provide incremental delivery where it is beneficial and desirable. An OHTTP relay that wants to support chunked OHTTP thus has an incentive to allow incremental delivery. It isn't violating HTTP semantics by buffering, but it isn't being very helpful to its clients. Since OHTTP relays are generally set up for specific services and relationships, this seems like a tractable problem.\r\n\r\nFrom my reading, the text about incremental delivery isn't normative; deployments can choose to do incremental delivery or not, depending on their situation.\r\n\r\nI don't think I'd say that chunked OHTTP as a protocol is _requiring_ that intermediaries do incremental forwarding; instead, its the clients of relays that will complain when they aren't getting their desired behavior.",
+          "createdAt": "2024-03-29T15:45:48Z",
+          "updatedAt": "2024-03-29T15:45:48Z"
+        },
+        {
+          "author": "mnot",
+          "authorAssociation": "NONE",
+          "body": "Note that buffering is mostly done by intermediaries doing things like virus scanning, often on-box. ",
+          "createdAt": "2024-03-29T21:45:16Z",
+          "updatedAt": "2024-03-29T21:45:16Z"
+        },
+        {
+          "author": "kazuho",
+          "authorAssociation": "NONE",
+          "body": "@mnot \r\n> Note that buffering is mostly done by intermediaries doing things like virus scanning, often on-box.\r\n\r\nOr intermediaries that try to reduce concurrency to nearby back-end servers, which I think is fairly common.\r\n\r\nLooking back the history, one of the reasons people have deployed Nginx in front of preforking application servers (incl. Apache HTTP server + mod_php) is to use Nginx as a buffer for reducing concurrency. Preforking servers cannot handle as many connections as a event-driven server does. Therefore, it makes (or made) sense to let Nginx to buffer highly concurrent but slowly arriving requests until the entire request is received. Once each request is received completely, Nginx opens a connection to the backend and starts forwarding the request.\r\n\r\nProxies do provide knobs for changing the behavior. In case of Nginx, the knob is [`proxy_request_buffering`](http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_request_buffering). But the default is `on`, meaning that Nginx will try to buffer the entire request.\r\n\r\n@tfpauly \r\n> My initial inclination is to interpret this how @martinthomson does \u2014 essentially, that while POST clients \"cannot rely on incremental delivery\" in general, specific services can indeed provide incremental delivery where it is beneficial and desirable.\r\n\r\nI'm not sure if I agree with the interpretation considering that the MUST NOT in RFC 9205 section 3.1 follows this sentence: _This split between generic and application-specific semantics allows an HTTP message to be handled by common software (e.g., HTTP servers, intermediaries, client implementations, and caches) **without requiring those implementations to understand the application in use**_ (emphasis mine).\r\n\r\nBut even if we ignore RFC 9205, I'm still stuck with [this question](https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/19#issuecomment-2026468705).\r\n\r\nTo me, all the argument to use HTTP POST for Chunked OHTTTP seem to be equally applicable to WebSockets over H2/H3, masque, or connect-tcp. The arguments can be (or could have been) used to say that masque or connect-tcp should be built on top of HTTP POST, because the servers / intermediaries could be configured to start forwarding bytes without buffering at a per-resource basis.\r\n\r\nBut we chose to use extended CONNECT. Is there a reason to believe that for POST is a better choice for Chunked OHTTP while extended CONNECT is (was) a better choice for WebSockets over H2/H3, masque, and connect-udp?",
+          "createdAt": "2024-03-30T00:37:08Z",
+          "updatedAt": "2024-03-30T00:43:37Z"
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "id": "I_kwDOJtaXUM6H4sfr",
+      "title": "Be more explicit about interactivity",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/20",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Note that the relay might buffer, which is OK.  But if you expect to interact (that is, multiple rounds of communication), buffering will make things break.\r\n\r\nThis is not going to work for 100-continue, so we should note that.  But maybe clients can arrange with intermediaries to disabling buffering for that case.  This will work anyway unless the buffering is indefinite.",
+      "createdAt": "2024-05-05T23:21:16Z",
+      "updatedAt": "2024-05-05T23:22:32Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 4,
+      "id": "PR_kwDOJtaXUM5W2dZ2",
+      "title": "Rename streamed to chunked",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/4",
+      "state": "MERGED",
+      "author": "tfpauly",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #1 ",
+      "createdAt": "2023-07-31T22:34:54Z",
+      "updatedAt": "2023-07-31T22:35:45Z",
+      "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "baseRefName": "main",
+      "baseRefOid": "5431b6cf3db1f1c080cbdbbc6f95a769523f60c2",
+      "headRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "headRefName": "rename",
+      "headRefOid": "a5c041b3e779fd01d67aa76c5aa2ef8f3d8b411f",
+      "closedAt": "2023-07-31T22:35:44Z",
+      "mergedAt": "2023-07-31T22:35:44Z",
+      "mergedBy": "tfpauly",
+      "mergeCommit": {
+        "oid": "21a701d0a3456ea54db7a65a9f50098c6b615400"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 6,
+      "id": "PR_kwDOJtaXUM5XsJcJ",
+      "title": "Edit pass",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/6",
+      "state": "MERGED",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "A few things:\r\n\r\n- author (whatever)\r\n- changed the label used (otherwise we have a confusability attack which leads to very easy truncation)\r\n- tweaked entropy according to a fix we just got for OHTTP\r\n- some language changes, especially in security considerations, largely based on what I heard in feedback at the last meeting",
+      "createdAt": "2023-08-11T03:09:14Z",
+      "updatedAt": "2023-08-11T03:20:44Z",
+      "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "baseRefName": "main",
+      "baseRefOid": "3b58e4ec905165111515a990a9bdd2d12708ba79",
+      "headRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "headRefName": "martin",
+      "headRefOid": "ec60789f16e1d66a73930dec514c6264c90ff18c",
+      "closedAt": "2023-08-11T03:20:44Z",
+      "mergedAt": "2023-08-11T03:20:44Z",
+      "mergedBy": "tfpauly",
+      "mergeCommit": {
+        "oid": "f3dd16963c980057243c673352675f59961455a4"
+      },
+      "comments": [
+        {
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Looks great, thank you!",
+          "createdAt": "2023-08-11T03:20:20Z",
+          "updatedAt": "2023-08-11T03:20:20Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJtaXUM5dwWKW",
+          "commit": {
+            "abbreviatedOid": "ec60789"
+          },
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-08-11T03:20:02Z",
+          "updatedAt": "2023-08-11T03:20:10Z",
+          "comments": [
+            {
+              "originalPosition": 123,
+              "body": "Ah, the evidence of my find-and-replace... ",
+              "createdAt": "2023-08-11T03:20:02Z",
+              "updatedAt": "2023-08-11T03:20:10Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOJtaXUM5YHVRU",
+      "title": "Add applicability section",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/8",
+      "state": "MERGED",
+      "author": "tfpauly",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "tfpauly"
+      ],
+      "labels": [],
+      "body": "Closes #2\r\n\r\nFirst stab at this",
+      "createdAt": "2023-08-17T03:31:23Z",
+      "updatedAt": "2023-08-17T15:42:31Z",
+      "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "baseRefName": "main",
+      "baseRefOid": "20db6ce4b0c456f2a85dad04a7619f9da54ec608",
+      "headRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "headRefName": "tfpauly-patch-1",
+      "headRefOid": "8987a820e70cef5244dd83f9a0de627c19fabe3a",
+      "closedAt": "2023-08-17T15:42:31Z",
+      "mergedAt": "2023-08-17T15:42:31Z",
+      "mergedBy": "tfpauly",
+      "mergeCommit": {
+        "oid": "595f4ef54c42911fdd9bb88aaaab5bf6e1fc218a"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJtaXUM5eRzZI",
+          "commit": {
+            "abbreviatedOid": "c818cd6"
+          },
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Looks good.  Feedback to be incorporated at your discretion.",
+          "createdAt": "2023-08-17T03:34:19Z",
+          "updatedAt": "2023-08-17T03:39:12Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "\"The\" as in \"only\"?",
+              "createdAt": "2023-08-17T03:34:19Z",
+              "updatedAt": "2023-08-17T03:39:12Z"
+            },
+            {
+              "originalPosition": 20,
+              "body": "Might be worth adding that the application needs to be able to accept the potential for messages to be truncated, with a reference to security considerations.",
+              "createdAt": "2023-08-17T03:35:37Z",
+              "updatedAt": "2023-08-17T03:39:12Z"
+            },
+            {
+              "originalPosition": 11,
+              "body": "Is that an em dash?",
+              "createdAt": "2023-08-17T03:35:58Z",
+              "updatedAt": "2023-08-17T03:39:12Z"
+            },
+            {
+              "originalPosition": 6,
+              "body": "Maybe cite section 2.1 of OHTTP.",
+              "createdAt": "2023-08-17T03:37:01Z",
+              "updatedAt": "2023-08-17T03:39:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJtaXUM5eWPIU",
+          "commit": {
+            "abbreviatedOid": "c818cd6"
+          },
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-08-17T15:26:43Z",
+          "updatedAt": "2023-08-17T15:26:44Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "Probably better as \"one\":\r\n```suggestion\r\nOne specific functional capability that requires chunked Oblivious HTTP\r\n```",
+              "createdAt": "2023-08-17T15:26:43Z",
+              "updatedAt": "2023-08-17T15:26:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJtaXUM5eWT5s",
+          "commit": {
+            "abbreviatedOid": "c818cd6"
+          },
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-08-17T15:34:55Z",
+          "updatedAt": "2023-08-17T15:34:55Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "Indeed it is =)",
+              "createdAt": "2023-08-17T15:34:55Z",
+              "updatedAt": "2023-08-17T15:34:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJtaXUM5eWUgy",
+          "commit": {
+            "abbreviatedOid": "c818cd6"
+          },
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-08-17T15:36:15Z",
+          "updatedAt": "2023-08-17T15:36:15Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\r\nLike the non-chunked variant, chunked Oblivious HTTP has limited applicability\r\nas described in {{Section 2.1 of OHTTP}}, and requires the use of a willing\r\nOblivious Relay Resource and Oblivious Gateway Resource.\r\n```",
+              "createdAt": "2023-08-17T15:36:15Z",
+              "updatedAt": "2023-08-17T15:36:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJtaXUM5eWWmq",
+          "commit": {
+            "abbreviatedOid": "c818cd6"
+          },
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-08-17T15:40:48Z",
+          "updatedAt": "2023-08-17T15:40:48Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "```suggestion\r\npossible to process incrementally. Since incremental processing means that the\r\nmessage might end up being truncated, for example in the case of an error on the\r\nunderlying transport, applications also need to be prepared to safely handle incomplete\r\nmessages (see {{security}} for more discussion). Applications that use the Indeterminate\r\n```",
+              "createdAt": "2023-08-17T15:40:48Z",
+              "updatedAt": "2023-08-17T15:40:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJtaXUM5eWWzi",
+          "commit": {
+            "abbreviatedOid": "c818cd6"
+          },
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-08-17T15:41:13Z",
+          "updatedAt": "2023-08-17T15:41:14Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "Done",
+              "createdAt": "2023-08-17T15:41:13Z",
+              "updatedAt": "2023-08-17T15:41:14Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "id": "PR_kwDOJtaXUM5anCfL",
+      "title": "Update entropy variable name",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/11",
+      "state": "MERGED",
+      "author": "chris-wood",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "`entropy` alone seems like it names a buffer, rather than an integer length.",
+      "createdAt": "2023-09-18T20:33:00Z",
+      "updatedAt": "2023-09-19T02:16:30Z",
+      "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "baseRefName": "main",
+      "baseRefOid": "595f4ef54c42911fdd9bb88aaaab5bf6e1fc218a",
+      "headRepository": "chris-wood/draft-ohai-chunked-ohttp",
+      "headRefName": "patch-1",
+      "headRefOid": "abfcf6ba3e78571c9aafae98649eeb937f9b421e",
+      "closedAt": "2023-09-19T02:16:30Z",
+      "mergedAt": "2023-09-19T02:16:30Z",
+      "mergedBy": "tfpauly",
+      "mergeCommit": {
+        "oid": "41c04e1e51a8df302068376f8d9aea96eaaaf5d3"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJtaXUM5hSRvb",
+          "commit": {
+            "abbreviatedOid": "abfcf6b"
+          },
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-09-19T00:11:38Z",
+          "updatedAt": "2023-09-19T00:11:38Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJtaXUM5hSsH3",
+          "commit": {
+            "abbreviatedOid": "abfcf6b"
+          },
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-09-19T02:16:24Z",
+          "updatedAt": "2023-09-19T02:16:24Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "id": "PR_kwDOJtaXUM5aoEmj",
+      "title": "Remove repetition of response_nonce assignment",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/14",
+      "state": "MERGED",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This will conflict with #11, but it's a trivial thing to merge that and do this again.\r\n\r\nCloses #12.",
+      "createdAt": "2023-09-19T00:44:27Z",
+      "updatedAt": "2023-09-19T02:18:04Z",
+      "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "baseRefName": "main",
+      "baseRefOid": "41c04e1e51a8df302068376f8d9aea96eaaaf5d3",
+      "headRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "headRefName": "one-nonce",
+      "headRefOid": "a4598899d854183e0f7cb91f580726f1ef9e2b86",
+      "closedAt": "2023-09-19T02:18:03Z",
+      "mergedAt": "2023-09-19T02:18:03Z",
+      "mergedBy": "tfpauly",
+      "mergeCommit": {
+        "oid": "b63f5f55c8f767cd257461cfc4aa305a8eb0b8b4"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJtaXUM5hSszH",
+          "commit": {
+            "abbreviatedOid": "a459889"
+          },
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-09-19T02:17:58Z",
+          "updatedAt": "2023-09-19T02:17:58Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "id": "PR_kwDOJtaXUM5kXtHj",
+      "title": "Some rewording suggestions for chunking",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/15",
+      "state": "MERGED",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Not a big deal, but I though we could put more of the logic in prose than we were.",
+      "createdAt": "2024-01-18T00:50:06Z",
+      "updatedAt": "2024-01-18T18:54:34Z",
+      "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "baseRefName": "main",
+      "baseRefOid": "118cd544ff1c821ff3949e6feb7aeb6bdf6d02cd",
+      "headRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "headRefName": "init-0",
+      "headRefOid": "d73426d430203cfbc2eaf87cfc54358c2fa23a6e",
+      "closedAt": "2024-01-18T18:54:34Z",
+      "mergedAt": "2024-01-18T18:54:34Z",
+      "mergedBy": "tfpauly",
+      "mergeCommit": {
+        "oid": "25e6979d34b6560b8c1277ed9bea2e0db91050b9"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJtaXUM5tGS_S",
+          "commit": {
+            "abbreviatedOid": "d73426d"
+          },
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-01-18T18:54:29Z",
+          "updatedAt": "2024-01-18T18:54:29Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "id": "PR_kwDOJtaXUM5kXw1G",
+      "title": "Add some security considerations about interactivity risk",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/17",
+      "state": "MERGED",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This is one of the key points that we'll need to resolve before people are comfortable taking this work on.  Hopefully this text helps.",
+      "createdAt": "2024-01-18T01:08:15Z",
+      "updatedAt": "2024-01-21T14:58:26Z",
+      "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "baseRefName": "main",
+      "baseRefOid": "118cd544ff1c821ff3949e6feb7aeb6bdf6d02cd",
+      "headRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "headRefName": "rtt-measurement",
+      "headRefOid": "8cb6aae562a6c2396dcf43e2ffc5b2a4a75c16b6",
+      "closedAt": "2024-01-21T14:58:26Z",
+      "mergedAt": "2024-01-21T14:58:26Z",
+      "mergedBy": "tfpauly",
+      "mergeCommit": {
+        "oid": "5bcbb8b5592078115e1f7bc836dd9da34ac9f578"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJtaXUM5tGUpC",
+          "commit": {
+            "abbreviatedOid": "1d096c5"
+          },
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-18T18:58:53Z",
+          "updatedAt": "2024-01-18T18:58:57Z",
+          "comments": [
+            {
+              "originalPosition": 25,
+              "body": "I think it might be useful to point out that clients can choose to not be interactive.\r\n\r\n```suggestion\r\nIn order to prevent the Oblivious Gateway Resource from observing the round trip time\r\nto the client, client implementations can choose to not base the sending of request chunks based\r\non received response chunks. These interactions can still benefit from chunked processing,\r\nwithout incurring additional observability risks.\r\n```",
+              "createdAt": "2024-01-18T18:58:53Z",
+              "updatedAt": "2024-01-18T18:58:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJtaXUM5tZWHB",
+          "commit": {
+            "abbreviatedOid": "8cb6aae"
+          },
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-01-21T14:58:20Z",
+          "updatedAt": "2024-01-21T14:58:20Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "id": "PR_kwDOJtaXUM50Y9V6",
+      "title": "Maximum number of chunks",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/21",
+      "state": "MERGED",
+      "author": "tfpauly",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #9",
+      "createdAt": "2024-07-04T02:36:38Z",
+      "updatedAt": "2024-07-08T22:05:19Z",
+      "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "baseRefName": "main",
+      "baseRefOid": "1ce96ce4cfd2d7d3036d87fb9ceed40d51b843d3",
+      "headRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "headRefName": "tfpauly-patch-2",
+      "headRefOid": "6ca4f972b94a195493b2d4e6cc42a1e447443f90",
+      "closedAt": "2024-07-08T22:05:05Z",
+      "mergedAt": "2024-07-08T22:05:05Z",
+      "mergedBy": "tfpauly",
+      "mergeCommit": {
+        "oid": "93cd5616c05b984bae716fdfc3ca6cb04759d026"
+      },
+      "comments": [
+        {
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@chris-wood please check if this looks right",
+          "createdAt": "2024-07-04T02:36:48Z",
+          "updatedAt": "2024-07-04T02:36:48Z"
+        },
+        {
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "body": "(Chris confirmed offline)\r\n",
+          "createdAt": "2024-07-08T22:05:19Z",
+          "updatedAt": "2024-07-08T22:05:19Z"
+        }
+      ],
+      "reviews": []
+    }
+  ]
+}
