@@ -15,6 +15,9 @@ venue:
   group: OHAI
   type: Working Group
   mail: ohai@ietf.org
+  arch: https://mailarchive.ietf.org/arch/browse/ohai/
+  github: ietf-wg-ohai/draft-ohai-chunked-ohttp
+  latest: https://ietf-wg-ohai.github.io/draft-ohai-chunked-ohttp/draft-ietf-ohai-chunked-ohttp.html
 
 author:
  -
