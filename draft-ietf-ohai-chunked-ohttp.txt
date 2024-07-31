@@ -5,8 +5,8 @@
 OHAI Working Group                                              T. Pauly
 Internet-Draft                                                     Apple
 Intended status: Standards Track                              M. Thomson
-Expires: 9 January 2025                                          Mozilla
-                                                             8 July 2024
+Expires: 1 February 2025                                         Mozilla
+                                                            31 July 2024
 
 
                     Chunked Oblivious HTTP Messages
@@ -25,13 +25,18 @@ About This Document
 
    This note is to be removed before publishing as an RFC.
 
-   Status information for this document may be found at
+   The latest revision of this draft can be found at https://ietf-wg-
+   ohai.github.io/draft-ohai-chunked-ohttp/draft-ietf-ohai-chunked-
+   ohttp.html.  Status information for this document may be found at
    https://datatracker.ietf.org/doc/draft-ietf-ohai-chunked-ohttp/.
 
    Discussion of this document takes place on the OHAI Working Group
    mailing list (mailto:ohai@ietf.org), which is archived at
    https://mailarchive.ietf.org/arch/browse/ohai/.  Subscribe at
    https://www.ietf.org/mailman/listinfo/ohai/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp.
 
 Status of This Memo
 
@@ -48,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 January 2025.
+   This Internet-Draft will expire on 1 February 2025.
 
 Copyright Notice
 
