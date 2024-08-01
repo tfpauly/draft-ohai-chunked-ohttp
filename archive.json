@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-07-30T00:51:06.990140+00:00",
+  "timestamp": "2024-08-01T00:55:35.974344+00:00",
   "repo": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
   "labels": [
     {
@@ -438,14 +438,29 @@
       "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/23",
       "state": "OPEN",
       "author": "DavidSchinazi",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Chunked OHTTP doesn't have perfect forward secrecy. In most scenarios, HTTPS is a better fit, with TLS 0-RTT to improve latency. HTTPS-over-CONNECT-over-HTTPS with TLS 0-RTT is a better fit for most applications that want the privacy guarantees of such a system, with one exception: when separate requests need to be uncorrelatable. That's because TLS 0-RTT uses TLS session tickets which allow linkability. I think we should add some text to security considerations here to make the tradeoffs clear. We don't want someone to accidentally lose perfect forward secrecy.",
       "createdAt": "2024-07-26T02:20:18Z",
-      "updatedAt": "2024-07-26T02:20:18Z",
+      "updatedAt": "2024-07-31T16:26:17Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This is a property that is shared with the base OHTTP.  How important do you think that this is?  We already more or less include all the security considerations from the base protocol by reference.  Does this need a special callout?",
+          "createdAt": "2024-07-31T02:49:22Z",
+          "updatedAt": "2024-07-31T02:49:22Z"
+        },
+        {
+          "author": "DavidSchinazi",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The original version of OHTTP was limited in terms of response sizes, which inherently limited the use cases that could work with it. Prior to this draft, the decision tree was:\r\n* small transaction -> OHTTP\r\n* long-lived exchange -> HTTPS-over-CONNECT\r\n\r\nThis specific draft changes this decision flow chart for long-lived exchanges, so we now need to explain when to pick one over the other.",
+          "createdAt": "2024-07-31T16:26:16Z",
+          "updatedAt": "2024-07-31T16:26:16Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -952,26 +967,42 @@
       "id": "PR_kwDOJtaXUM52h6yp",
       "title": "Fix draft metadata",
       "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/22",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "DavidSchinazi",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2024-07-26T02:14:33Z",
-      "updatedAt": "2024-07-26T02:14:33Z",
+      "updatedAt": "2024-07-31T02:48:09Z",
       "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
       "baseRefName": "main",
       "baseRefOid": "93cd5616c05b984bae716fdfc3ca6cb04759d026",
       "headRepository": "DavidSchinazi/draft-ohai-chunked-ohttp",
       "headRefName": "patch-1",
       "headRefOid": "3b146193c14e7e82318c7b71b38be0e96761ef22",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-07-31T02:48:09Z",
+      "mergedAt": "2024-07-31T02:48:09Z",
+      "mergedBy": "martinthomson",
+      "mergeCommit": {
+        "oid": "dc7940bce550ab5f599b312ed2b31177473a2710"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOJtaXUM6Dq1U1",
+          "commit": {
+            "abbreviatedOid": "3b14619"
+          },
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-07-31T02:48:04Z",
+          "updatedAt": "2024-07-31T02:48:04Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
