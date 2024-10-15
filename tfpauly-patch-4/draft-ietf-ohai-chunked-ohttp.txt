@@ -5,8 +5,8 @@
 OHAI Working Group                                              T. Pauly
 Internet-Draft                                                     Apple
 Intended status: Standards Track                              M. Thomson
-Expires: 5 January 2025                                          Mozilla
-                                                             4 July 2024
+Expires: 18 April 2025                                           Mozilla
+                                                         15 October 2024
 
 
                     Chunked Oblivious HTTP Messages
@@ -25,13 +25,18 @@ About This Document
 
    This note is to be removed before publishing as an RFC.
 
-   Status information for this document may be found at
+   The latest revision of this draft can be found at https://ietf-wg-
+   ohai.github.io/draft-ohai-chunked-ohttp/draft-ietf-ohai-chunked-
+   ohttp.html.  Status information for this document may be found at
    https://datatracker.ietf.org/doc/draft-ietf-ohai-chunked-ohttp/.
 
    Discussion of this document takes place on the OHAI Working Group
    mailing list (mailto:ohai@ietf.org), which is archived at
    https://mailarchive.ietf.org/arch/browse/ohai/.  Subscribe at
    https://www.ietf.org/mailman/listinfo/ohai/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp.
 
 Status of This Memo
 
@@ -48,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 January 2025.
+   This Internet-Draft will expire on 18 April 2025.
 
 Copyright Notice
 
@@ -76,7 +81,8 @@ Table of Contents
      6.1.  Request Encapsulation
      6.2.  Response Encapsulation
    7.  Security Considerations
-     7.1.  Interactivity and Privacy
+     7.1.  Message Truncation
+     7.2.  Interactivity and Privacy
    8.  IANA Considerations
      8.1.  message/ohttp-chunked-req Media Type
      8.2.  message/ohttp-chunked-res Media Type
@@ -337,6 +343,15 @@ Table of Contents
 
 7.  Security Considerations
 
+   In general, Chunked OHTTP inherits the same security considerations
+   as Oblivious HTTP [OHTTP].  Note specifically that while Chunked
+   OHTTP allows for incremental delivery and processing of messages, it
+   does not add forward secrecy between chunks.  As with the non-chunked
+   variant, forward secrecy is only provided when changing the key
+   configuration.
+
+7.1.  Message Truncation
+
    The primary advantage of a chunked encoding is that chunked requests
    or responses can be generated or processed incrementally.  However,
    for a recipient in particular, processing an incomplete message can
@@ -357,7 +372,7 @@ Table of Contents
    0-valued length prefix, which was successfully decrypted using the
    expected sentinel value, "final", in the AAD.
 
-7.1.  Interactivity and Privacy
+7.2.  Interactivity and Privacy
 
    Without chunking, Oblivious HTTP involves a single request and
    response, with no further interactivity.  Using a chunked variant at

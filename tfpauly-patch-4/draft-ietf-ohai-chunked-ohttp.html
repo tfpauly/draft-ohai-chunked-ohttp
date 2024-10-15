@@ -14,21 +14,21 @@ request or response is processed. This allows incremental processing of Obliviou
 HTTP messages, which is particularly useful for handling large messages or systems
 that process messages slowly. 
     " name="description">
-<meta content="xml2rfc 3.22.0" name="generator">
+<meta content="xml2rfc 3.23.2" name="generator">
 <meta content="draft-ietf-ohai-chunked-ohttp-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.22.0
-    Python 3.12.3
+  xml2rfc 3.23.2
+    Python 3.12.7
     ConfigArgParse 1.7
-    google-i18n-address 3.1.0
+    google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.4
     lxml 4.9.4
-    platformdirs 4.2.2
+    platformdirs 4.3.6
     pycountry 22.3.5
     PyYAML 6.0.1
     requests 2.32.3
-    setuptools 69.5.1
+    setuptools 70.3.0
     wcwidth 0.2.13
 -->
 <link href="draft-ietf-ohai-chunked-ohttp.xml" rel="alternate" type="application/rfc+xml">
@@ -1028,11 +1028,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Chunked OHTTP</td>
-<td class="right">July 2024</td>
+<td class="right">October 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Pauly &amp; Thomson</td>
-<td class="center">Expires 5 January 2025</td>
+<td class="center">Expires 18 April 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1045,12 +1045,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-ohai-chunked-ohttp-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-07-04" class="published">4 July 2024</time>
+<time datetime="2024-10-15" class="published">15 October 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-01-05">5 January 2025</time></dd>
+<dd class="expires"><time datetime="2025-04-18">18 April 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1079,12 +1079,15 @@ that process messages slowly.<a href="#section-abstract-1" class="pilcrow">¶</a
       </h2>
 <p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
 <p id="section-note.1-2">
+        The latest revision of this draft can be found at <span><a href="https://ietf-wg-ohai.github.io/draft-ohai-chunked-ohttp/draft-ietf-ohai-chunked-ohttp.html">https://ietf-wg-ohai.github.io/draft-ohai-chunked-ohttp/draft-ietf-ohai-chunked-ohttp.html</a></span>.
         Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-ietf-ohai-chunked-ohttp/">https://datatracker.ietf.org/doc/draft-ietf-ohai-chunked-ohttp/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
 <p id="section-note.1-3">
         Discussion of this document takes place on the
         OHAI Working Group mailing list (<span><a href="mailto:ohai@ietf.org">mailto:ohai@ietf.org</a></span>),
         which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/ohai/">https://mailarchive.ietf.org/arch/browse/ohai/</a></span>.
         Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/ohai/">https://www.ietf.org/mailman/listinfo/ohai/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
+<p id="section-note.1-4">Source for this draft and an issue tracker can be found at
+        <span><a href="https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp">https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1105,7 +1108,7 @@ that process messages slowly.<a href="#section-abstract-1" class="pilcrow">¶</a
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 5 January 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 18 April 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1169,7 +1172,10 @@ that process messages slowly.<a href="#section-abstract-1" class="pilcrow">¶</a
             <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
-                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-interactivity-and-privacy" class="internal xref">Interactivity and Privacy</a></p>
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-message-truncation" class="internal xref">Message Truncation</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-interactivity-and-privacy" class="internal xref">Interactivity and Privacy</a></p>
 </li>
             </ul>
 </li>
@@ -1502,34 +1508,46 @@ Therefore, the response <span class="bcp14">MUST NOT</span> use <code>2^Nn</code
       <h2 id="name-security-considerations">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-7-1">The primary advantage of a chunked encoding is that chunked requests or responses can
+<p id="section-7-1">In general, Chunked OHTTP inherits the same security considerations as Oblivious
+HTTP <span>[<a href="#OHTTP" class="cite xref">OHTTP</a>]</span>. Note specifically that while Chunked OHTTP allows for incremental
+delivery and processing of messages, it does not add forward secrecy between
+chunks. As with the non-chunked variant, forward secrecy is only provided when
+changing the key configuration.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<div id="message-truncation">
+<section id="section-7.1">
+        <h3 id="name-message-truncation">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-message-truncation" class="section-name selfRef">Message Truncation</a>
+        </h3>
+<p id="section-7.1-1">The primary advantage of a chunked encoding is that chunked requests or responses can
 be generated or processed incrementally.  However, for a recipient in particular,
-processing an incomplete message can have security consequences.<a href="#section-7-1" class="pilcrow">¶</a></p>
-<p id="section-7-2">The potential for message truncation is not a new concern for HTTP.  All versions of
+processing an incomplete message can have security consequences.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
+<p id="section-7.1-2">The potential for message truncation is not a new concern for HTTP.  All versions of
 HTTP provide incremental delivery of messages.  For this use of Oblivious HTTP,
 incremental processing that might result in side-effects demands particular attention
 as Oblivious HTTP does not provide strong protection against replay attacks; see
 <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-ohai-ohttp-10#section-6.5" class="relref">Section 6.5</a> of [<a href="#OHTTP" class="cite xref">OHTTP</a>]</span>.  Truncation might be the result of interference at the
-network layer, or by a malicious Oblivious Relay Resource.<a href="#section-7-2" class="pilcrow">¶</a></p>
-<p id="section-7-3">Endpoints that receive chunked messages can perform early processing if the risks are
+network layer, or by a malicious Oblivious Relay Resource.<a href="#section-7.1-2" class="pilcrow">¶</a></p>
+<p id="section-7.1-3">Endpoints that receive chunked messages can perform early processing if the risks are
 understood and accepted. Conversely, endpoints that depend on having a complete
 message <span class="bcp14">MUST</span> ensure that they do not consider a message complete until having
 received a chunk with a 0-valued length prefix, which was successfully decrypted
-using the expected sentinel value, "final", in the AAD.<a href="#section-7-3" class="pilcrow">¶</a></p>
+using the expected sentinel value, "final", in the AAD.<a href="#section-7.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
 <div id="interactivity-and-privacy">
-<section id="section-7.1">
+<section id="section-7.2">
         <h3 id="name-interactivity-and-privacy">
-<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-interactivity-and-privacy" class="section-name selfRef">Interactivity and Privacy</a>
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-interactivity-and-privacy" class="section-name selfRef">Interactivity and Privacy</a>
         </h3>
-<p id="section-7.1-1">Without chunking, Oblivious HTTP involves a single request and response, with no
+<p id="section-7.2-1">Without chunking, Oblivious HTTP involves a single request and response, with no
 further interactivity.  Using a chunked variant at both Client and Oblivious
 Gateway Resource creates the possibility that an exchange could lead to multiple
 rounds of interaction.  Information from early chunks from a peer could
-influence how an endpoint constructs later chunks of their message.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
-<p id="section-7.1-2">An Oblivious Gateway Resource could be able to observe the round trip time to
+influence how an endpoint constructs later chunks of their message.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
+<p id="section-7.2-2">An Oblivious Gateway Resource could be able to observe the round trip time to
 the Client if the Client conditions the timing or content of chunks on what it
-receives in a response.<a href="#section-7.1-2" class="pilcrow">¶</a></p>
-<p id="section-7.1-3">Client implementations therefore need to be aware of the possibility that
+receives in a response.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
+<p id="section-7.2-3">Client implementations therefore need to be aware of the possibility that
 processing chunks might result in observable interactivity that could reduces
 the privacy protection that the protocol could otherwise provide.  Interactivity
 that is deliberate might be acceptable. For instance, the 100-continue feature
@@ -1541,7 +1559,7 @@ might not achieve expected privacy outcomes.
 In order to prevent the Oblivious Gateway Resource from observing the round trip time
 to the client, client implementations can choose to not base the sending of request chunks based
 on received response chunks. These interactions can still benefit from chunked processing,
-without incurring additional observability risks.<a href="#section-7.1-3" class="pilcrow">¶</a></p>
+without incurring additional observability risks.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1778,6 +1796,7 @@ identify encapsulated binary HTTP responses that are incrementally generated or 
 </div>
 </section>
 </div>
+<div id="sec-combined-references">
 <section id="section-9">
       <h2 id="name-references">
 <a href="#section-9" class="section-number selfRef">9. </a><a href="#name-references" class="section-name selfRef">References</a>
@@ -1833,6 +1852,7 @@ identify encapsulated binary HTTP responses that are incrementally generated or 
 </section>
 </div>
 </section>
+</div>
 <div id="acknowledgments">
 <section id="appendix-A">
       <h2 id="name-acknowledgments">
