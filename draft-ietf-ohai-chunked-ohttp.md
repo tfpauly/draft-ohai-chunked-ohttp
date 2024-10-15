@@ -289,6 +289,14 @@ Therefore, the response MUST NOT use `2^Nn` or more chunks.
 
 # Security Considerations {#security}
 
+In general, Chunked OHTTP inherits the same security considerations as Oblivious
+HTTP {{OHTTP}}. Note specifically that while Chunked OHTTP allows for incremental
+delivery and processing of messages, it does not add forward secrecy between
+chunks. As with the non-chunked variant, forward secrecy is only provided when
+changing the key configuration.
+
+## Message Truncation
+
 The primary advantage of a chunked encoding is that chunked requests or responses can
 be generated or processed incrementally.  However, for a recipient in particular,
 processing an incomplete message can have security consequences.
