@@ -116,7 +116,8 @@ Chunked OHTTP messages generally will not include a `Content-Length` header fiel
 since the complete length of all chunks might not be known ahead of time.
 
 For example, a Chunked OHTTP request could look like the following:
-~~~
+
+~~~ http-message
 POST /request.example.net/proxy HTTP/1.1
 Host: proxy.example.org
 Content-Type: message/ohttp-chunked-req
