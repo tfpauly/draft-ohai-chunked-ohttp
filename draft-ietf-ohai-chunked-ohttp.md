@@ -41,7 +41,7 @@ that process messages slowly.
 
 # Introduction
 
-Oblivious HTTP {{!OHTTP=I-D.ietf-ohai-ohttp}} defines a system for sending HTTP requests
+Oblivious HTTP {{!OHTTP=RFC9458}} defines a system for sending HTTP requests
 and responses as encrypted messages. Clients send requests via a relay to a gateway, which
 is able to decrypt and forward the request to a target server. Responses are encrypted
 with an ephemeral symmetric key by the gateway and sent back to the client via the relay.
@@ -99,11 +99,31 @@ for a proxied TLS session.
 
 Notational conventions from {{OHTTP}} are used in this document.
 
-# Chunked Request and Response Media Types
+# Chunked Requests and Responses
 
 Chunked Oblivious HTTP defines different media than the non-chunked variant. These
 media types are "message/ohttp-chunked-req" (defined in {{iana-req}}) and
 "message/ohttp-chunked-res" (defined in {{iana-res}}).
+
+Additionally, Chunked OHTTP requests and responses SHOULD include the
+`Incremental` header field {{!INCREMENTAL=I-D.kazuho-httpbis-incremental-http}}
+in order to signal to intermediaries (such as the relay) that the content of
+the messages are intended to be delivered incrementally. Without this signal,
+intermediaries might buffer request or response body until complete, removing
+the benefits of using Chunked OHTTP.
+
+Chunked OHTTP messages generally will not include a `Content-Length` header field,
+since the complete length of all chunks might not be known ahead of time.
+
+For example, a Chunked OHTTP request could look like the following:
+~~~
+POST /request.example.net/proxy HTTP/1.1
+Host: proxy.example.org
+Content-Type: message/ohttp-chunked-req
+Incremental: ?1
+
+<content is an Encapsulated Request>
+~~~
 
 # Request Format {#request}
 
