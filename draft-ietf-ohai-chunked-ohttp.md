@@ -105,7 +105,7 @@ Chunked Oblivious HTTP defines different media than the non-chunked variant. The
 media types are "message/ohttp-chunked-req" (defined in {{iana-req}}) and
 "message/ohttp-chunked-res" (defined in {{iana-res}}).
 
-Additionally, Chunked OHTTP requests and responses SHOULD include the
+Chunked OHTTP requests and responses SHOULD include the
 `Incremental` header field {{!INCREMENTAL=I-D.kazuho-httpbis-incremental-http}}
 in order to signal to intermediaries (such as the relay) that the content of
 the messages are intended to be delivered incrementally. Without this signal,
