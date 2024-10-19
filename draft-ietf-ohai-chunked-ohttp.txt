@@ -5,8 +5,8 @@
 OHAI Working Group                                              T. Pauly
 Internet-Draft                                                     Apple
 Intended status: Standards Track                              M. Thomson
-Expires: 1 February 2025                                         Mozilla
-                                                            31 July 2024
+Expires: 22 April 2025                                           Mozilla
+                                                         19 October 2024
 
 
                     Chunked Oblivious HTTP Messages
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 February 2025.
+   This Internet-Draft will expire on 22 April 2025.
 
 Copyright Notice
 
@@ -74,7 +74,7 @@ Table of Contents
    1.  Introduction
      1.1.  Applicability
    2.  Conventions and Definitions
-   3.  Chunked Request and Response Media Types
+   3.  Chunked Requests and Responses
    4.  Request Format
    5.  Response Format
    6.  Encapsulation of Chunks
@@ -164,12 +164,32 @@ Table of Contents
 
    Notational conventions from [OHTTP] are used in this document.
 
-3.  Chunked Request and Response Media Types
+3.  Chunked Requests and Responses
 
    Chunked Oblivious HTTP defines different media than the non-chunked
    variant.  These media types are "message/ohttp-chunked-req" (defined
    in Section 8.1) and "message/ohttp-chunked-res" (defined in
    Section 8.2).
+
+   Chunked OHTTP requests and responses SHOULD include the Incremental
+   header field [INCREMENTAL] in order to signal to intermediaries (such
+   as the relay) that the content of the messages are intended to be
+   delivered incrementally.  Without this signal, intermediaries might
+   buffer request or response body until complete, removing the benefits
+   of using Chunked OHTTP.
+
+   Chunked OHTTP messages generally will not include a Content-Length
+   header field, since the complete length of all chunks might not be
+   known ahead of time.
+
+   For example, a Chunked OHTTP request could look like the following:
+
+   POST /request.example.net/proxy HTTP/1.1
+   Host: proxy.example.org
+   Content-Type: message/ohttp-chunked-req
+   Incremental: ?1
+
+   <content is an Encapsulated Request>
 
 4.  Request Format
 
@@ -471,10 +491,16 @@ Table of Contents
               Public Key Encryption", RFC 9180, DOI 10.17487/RFC9180,
               February 2022, <https://www.rfc-editor.org/rfc/rfc9180>.
 
-   [OHTTP]    Thomson, M. and C. A. Wood, "Oblivious HTTP", Work in
-              Progress, Internet-Draft, draft-ietf-ohai-ohttp-10, 25
-              August 2023, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-ohai-ohttp-10>.
+   [INCREMENTAL]
+              Oku, K., Pauly, T., and M. Thomson, "Incremental HTTP
+              Messages", Work in Progress, Internet-Draft, draft-kazuho-
+              httpbis-incremental-http-00, 15 October 2024,
+              <https://datatracker.ietf.org/doc/html/draft-kazuho-
+              httpbis-incremental-http-00>.
+
+   [OHTTP]    Thomson, M. and C. A. Wood, "Oblivious HTTP", RFC 9458,
+              DOI 10.17487/RFC9458, January 2024,
+              <https://www.rfc-editor.org/rfc/rfc9458>.
 
    [QUIC]     Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
               Multiplexed and Secure Transport", RFC 9000,
