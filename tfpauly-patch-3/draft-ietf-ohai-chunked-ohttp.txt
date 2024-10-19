@@ -5,8 +5,8 @@
 OHAI Working Group                                              T. Pauly
 Internet-Draft                                                     Apple
 Intended status: Standards Track                              M. Thomson
-Expires: 18 April 2025                                           Mozilla
-                                                         15 October 2024
+Expires: 22 April 2025                                           Mozilla
+                                                         19 October 2024
 
 
                     Chunked Oblivious HTTP Messages
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 April 2025.
+   This Internet-Draft will expire on 22 April 2025.
 
 Copyright Notice
 
@@ -171,12 +171,12 @@ Table of Contents
    in Section 8.1) and "message/ohttp-chunked-res" (defined in
    Section 8.2).
 
-   Additionally, Chunked OHTTP requests and responses SHOULD include the
-   Incremental header field [INCREMENTAL] in order to signal to
-   intermediaries (such as the relay) that the content of the messages
-   are intended to be delivered incrementally.  Without this signal,
-   intermediaries might buffer request or response body until complete,
-   removing the benefits of using Chunked OHTTP.
+   Chunked OHTTP requests and responses SHOULD include the Incremental
+   header field [INCREMENTAL] in order to signal to intermediaries (such
+   as the relay) that the content of the messages are intended to be
+   delivered incrementally.  Without this signal, intermediaries might
+   buffer request or response body until complete, removing the benefits
+   of using Chunked OHTTP.
 
    Chunked OHTTP messages generally will not include a Content-Length
    header field, since the complete length of all chunks might not be
