@@ -293,7 +293,8 @@ In general, Chunked OHTTP inherits the same security considerations as Oblivious
 HTTP {{OHTTP}}. Note specifically that while Chunked OHTTP allows for incremental
 delivery and processing of messages, it does not add forward secrecy between
 chunks. As with the non-chunked variant, forward secrecy is only provided when
-changing the key configuration.
+changing the key configuration. This is particularly important when chunking is
+used to enable interactivity.
 
 ## Message Truncation
 
