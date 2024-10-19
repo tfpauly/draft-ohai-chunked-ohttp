@@ -81,7 +81,8 @@ Table of Contents
      6.1.  Request Encapsulation
      6.2.  Response Encapsulation
    7.  Security Considerations
-     7.1.  Interactivity and Privacy
+     7.1.  Message Truncation
+     7.2.  Interactivity and Privacy
    8.  IANA Considerations
      8.1.  message/ohttp-chunked-req Media Type
      8.2.  message/ohttp-chunked-res Media Type
@@ -362,6 +363,16 @@ Table of Contents
 
 7.  Security Considerations
 
+   In general, Chunked OHTTP inherits the same security considerations
+   as Oblivious HTTP [OHTTP].  Note specifically that while Chunked
+   OHTTP allows for incremental delivery and processing of messages, it
+   does not add forward secrecy between chunks.  As with the non-chunked
+   variant, forward secrecy is only provided when changing the key
+   configuration.  This is particularly important when chunking is used
+   to enable interactivity.
+
+7.1.  Message Truncation
+
    The primary advantage of a chunked encoding is that chunked requests
    or responses can be generated or processed incrementally.  However,
    for a recipient in particular, processing an incomplete message can
@@ -382,7 +393,7 @@ Table of Contents
    0-valued length prefix, which was successfully decrypted using the
    expected sentinel value, "final", in the AAD.
 
-7.1.  Interactivity and Privacy
+7.2.  Interactivity and Privacy
 
    Without chunking, Oblivious HTTP involves a single request and
    response, with no further interactivity.  Using a chunked variant at
