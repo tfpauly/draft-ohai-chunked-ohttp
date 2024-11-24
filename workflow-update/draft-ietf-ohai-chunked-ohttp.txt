@@ -5,8 +5,8 @@
 OHAI Working Group                                              T. Pauly
 Internet-Draft                                                     Apple
 Intended status: Standards Track                              M. Thomson
-Expires: 22 April 2025                                           Mozilla
-                                                         19 October 2024
+Expires: 28 May 2025                                             Mozilla
+                                                        24 November 2024
 
 
                     Chunked Oblivious HTTP Messages
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 April 2025.
+   This Internet-Draft will expire on 28 May 2025.
 
 Copyright Notice
 
@@ -81,7 +81,8 @@ Table of Contents
      6.1.  Request Encapsulation
      6.2.  Response Encapsulation
    7.  Security Considerations
-     7.1.  Interactivity and Privacy
+     7.1.  Message Truncation
+     7.2.  Interactivity and Privacy
    8.  IANA Considerations
      8.1.  message/ohttp-chunked-req Media Type
      8.2.  message/ohttp-chunked-res Media Type
@@ -362,6 +363,16 @@ Table of Contents
 
 7.  Security Considerations
 
+   In general, Chunked OHTTP inherits the same security considerations
+   as Oblivious HTTP [OHTTP].  Note specifically that while Chunked
+   OHTTP allows for incremental delivery and processing of messages, it
+   does not add forward secrecy between chunks.  As with the non-chunked
+   variant, forward secrecy is only provided when changing the key
+   configuration.  This is particularly important when chunking is used
+   to enable interactivity.
+
+7.1.  Message Truncation
+
    The primary advantage of a chunked encoding is that chunked requests
    or responses can be generated or processed incrementally.  However,
    for a recipient in particular, processing an incomplete message can
@@ -382,7 +393,7 @@ Table of Contents
    0-valued length prefix, which was successfully decrypted using the
    expected sentinel value, "final", in the AAD.
 
-7.1.  Interactivity and Privacy
+7.2.  Interactivity and Privacy
 
    Without chunking, Oblivious HTTP involves a single request and
    response, with no further interactivity.  Using a chunked variant at
@@ -405,11 +416,13 @@ Table of Contents
    This highlights the risks involved in the use of this chunked
    encoding to adapt an existing HTTP-based interaction to use Oblivious
    HTTP as such an adaptation might not achieve expected privacy
-   outcomes.  In order to prevent the Oblivious Gateway Resource from
-   observing the round trip time to the client, client implementations
-   can choose to not base the sending of request chunks based on
-   received response chunks.  These interactions can still benefit from
-   chunked processing, without incurring additional observability risks.
+   outcomes.
+
+   In order to prevent the Oblivious Gateway Resource from observing the
+   round trip time to the client, client implementations can choose to
+   not base the sending of request chunks based on received response
+   chunks.  These interactions can still benefit from chunked
+   processing, without incurring additional observability risks.
 
 8.  IANA Considerations
 
