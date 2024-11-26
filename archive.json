@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-11-24T01:05:24.339641+00:00",
+  "timestamp": "2024-11-26T01:01:15.874769+00:00",
   "repo": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
   "labels": [
     {
@@ -1175,6 +1175,32 @@
       "mergeCommit": {
         "oid": "b4d0e2c1d19b1cc22aeea694108df73ea28da1e9"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 28,
+      "id": "PR_kwDOJtaXUM6C87iR",
+      "title": "Workflow update",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/28",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The current workflows we're using will break in a few weeks.  The scripts turned up a few other maintenance tidbits too.",
+      "createdAt": "2024-11-24T22:29:58Z",
+      "updatedAt": "2024-11-24T22:29:58Z",
+      "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "baseRefName": "main",
+      "baseRefOid": "b4d0e2c1d19b1cc22aeea694108df73ea28da1e9",
+      "headRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "headRefName": "workflow-update",
+      "headRefOid": "db486cbeaaeebf296ebcc9111459c4e23edbf1d6",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
