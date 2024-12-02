@@ -1,3 +1,3 @@
 # Automatically generated CODEOWNERS
 # Regenerate with `make update-codeowners`
-draft-ohai-streamed-ohttp.md tpauly@apple.com
+draft-ietf-ohai-chunked-ohttp.md tpauly@apple.com mt@lowentropy.net
