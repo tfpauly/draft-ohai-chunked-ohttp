@@ -126,6 +126,11 @@ Incremental: ?1
 <content is an Encapsulated Request>
 ~~~
 
+Implementations MUST support receiving chunks that contain `2^14` (16384) octets
+of data prior to encapsulation. Senders of chunks SHOULD limit their chunks to
+this size, unless they are aware of support for larger sizes by the receiving
+party.
+
 # Request Format {#request}
 
 Chunked OHTTP requests start with the same header as used for the non-chunked variant,
