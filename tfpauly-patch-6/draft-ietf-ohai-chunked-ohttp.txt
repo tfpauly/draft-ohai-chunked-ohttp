@@ -180,8 +180,8 @@ Table of Contents
    Chunked OHTTP, then the request will fail as if OHTTP as a whole were
    not supported.  If clients retry requests with the non-chunked media
    type, it is possible for different clients to have an inconsistent
-   view of which variant to use, which could be used to identify
-   clients.
+   view of which variant to use, which could be used to partition client
+   anonymity sets.
 
    Chunked OHTTP requests and responses SHOULD include the Incremental
    header field [INCREMENTAL] in order to signal to intermediaries (such
@@ -389,7 +389,7 @@ Table of Contents
    Specifically, clients SHOULD NOT fall back from Chunked OHTTP to the
    non-chunked variant if they are configured to used chunking.  Falling
    back would allow clients to have inconsistent behavior that could be
-   used to identify them.
+   used to partition client anonymity sets.
 
 7.1.  Message Truncation
 

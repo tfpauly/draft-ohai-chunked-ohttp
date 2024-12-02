@@ -1308,8 +1308,7 @@ media types for their requests, to indicate that Chunked OHTTP is required.
 If the gateway unexpectedly does not support Chunked OHTTP, then the request
 will fail as if OHTTP as a whole were not supported. If clients retry requests
 with the non-chunked media type, it is possible for different clients to have
-an inconsistent view of which variant to use, which could be used to identify
-clients.<a href="#section-3-2" class="pilcrow">¶</a></p>
+an inconsistent view of which variant to use, which could be used to partition client anonymity sets.<a href="#section-3-2" class="pilcrow">¶</a></p>
 <p id="section-3-3">Chunked OHTTP requests and responses <span class="bcp14">SHOULD</span> include the
 <code>Incremental</code> header field <span>[<a href="#INCREMENTAL" class="cite xref">INCREMENTAL</a>]</span>
 in order to signal to intermediaries (such as the relay) that the content of
@@ -1563,8 +1562,7 @@ knows about for a particular gateway. As such, the use of Chunked OHTTP falls
 under the same consistency privacy considerations as the rest of the configuration
 (see <span><a href="https://rfc-editor.org/rfc/rfc9458#section-7" class="relref">Section 7</a> of [<a href="#OHTTP" class="cite xref">OHTTP</a>]</span>). Specifically, clients <span class="bcp14">SHOULD NOT</span> fall back from
 Chunked OHTTP to the non-chunked variant if they are configured to used chunking.
-Falling back would allow clients to have inconsistent behavior that could be used
-to identify them.<a href="#section-7-2" class="pilcrow">¶</a></p>
+Falling back would allow clients to have inconsistent behavior that could be used to partition client anonymity sets.<a href="#section-7-2" class="pilcrow">¶</a></p>
 <div id="message-truncation">
 <section id="section-7.1">
         <h3 id="name-message-truncation">
