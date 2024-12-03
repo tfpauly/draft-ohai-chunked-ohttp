@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-01T01:12:34.107544+00:00",
+  "timestamp": "2024-12-03T01:03:15.274798+00:00",
   "repo": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
   "labels": [
     {
@@ -161,11 +161,11 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [
-        "discuss"
+        "ready for text"
       ],
       "body": "We need a section on how a client or gateway might indicate that they are able to use this.\r\n\r\nUse of something like this falls under the general configuration of a gateway, so that consistency requirements apply.  If clients have an inconsistent view of support for chunking, then they will be more identifiable as a result.  We need language about that too.",
       "createdAt": "2023-08-11T02:32:49Z",
-      "updatedAt": "2024-03-11T19:38:32Z",
+      "updatedAt": "2024-12-02T19:17:09Z",
       "closedAt": null,
       "comments": []
     },
@@ -179,11 +179,11 @@
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [
-        "discuss"
+        "ready for text"
       ],
       "body": "Varints for lengths have this problem where they can be very large, requiring a lot of memory. Even TLS has this problem and it only has 16k chunks. It would be good to have some way to negotiate chunk size. This ends up being a little weird though.\r\n\r\nIf you have too many size options, that leaks client details in a way that might be identifying.\r\n\r\nIf you negotiate on the outside of the encapsulation, the relay has to know to forward it. If you negotiate on the inside, it might end up going to the target and not the gateway.\r\n\r\nThat is, this is much like #5: we will need to be careful.",
       "createdAt": "2023-08-14T15:20:37Z",
-      "updatedAt": "2024-03-11T19:38:32Z",
+      "updatedAt": "2024-12-02T03:53:06Z",
       "closedAt": null,
       "comments": [
         {
@@ -192,6 +192,13 @@
           "body": "I wonder if this needs to be explicitly addressed? If we look at OHTTP _without_ chunking, there is no max size (other than the number of bytes that can be in the outer stream/body. If we view chunking as a way to allow incremental processing of something that otherwise would be one larger OHTTP message, it will always be strictly less memory than it would have been otherwise.\r\n\r\nIt is a good point that a particular chunk size could fingerprint a client if it was very consistent; similarly, the chunk size could reveal information to the relay about the contents (although the overall message size can too).",
           "createdAt": "2023-08-14T15:41:15Z",
           "updatedAt": "2023-08-14T15:41:15Z"
+        },
+        {
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "body": "At IETF 121, discussed having a 16K maximum chunk size if the peer's supported size is otherwise not known.",
+          "createdAt": "2024-12-02T03:52:59Z",
+          "updatedAt": "2024-12-02T03:52:59Z"
         }
       ]
     },
@@ -275,13 +282,15 @@
       "state": "OPEN",
       "author": "chris-wood",
       "authorAssociation": "CONTRIBUTOR",
-      "assignees": [],
+      "assignees": [
+        "chris-wood"
+      ],
       "labels": [
         "ready for text"
       ],
       "body": "We should probably have some!",
       "createdAt": "2023-09-18T20:38:34Z",
-      "updatedAt": "2024-03-11T19:40:20Z",
+      "updatedAt": "2024-12-02T19:15:48Z",
       "closedAt": null,
       "comments": []
     },
@@ -1183,26 +1192,135 @@
       "id": "PR_kwDOJtaXUM6C87iR",
       "title": "Workflow update",
       "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/28",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "martinthomson",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "The current workflows we're using will break in a few weeks.  The scripts turned up a few other maintenance tidbits too.",
       "createdAt": "2024-11-24T22:29:58Z",
-      "updatedAt": "2024-11-24T22:29:58Z",
+      "updatedAt": "2024-12-02T03:49:03Z",
       "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
       "baseRefName": "main",
       "baseRefOid": "b4d0e2c1d19b1cc22aeea694108df73ea28da1e9",
       "headRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
       "headRefName": "workflow-update",
       "headRefOid": "db486cbeaaeebf296ebcc9111459c4e23edbf1d6",
+      "closedAt": "2024-12-02T03:49:03Z",
+      "mergedAt": "2024-12-02T03:49:03Z",
+      "mergedBy": "tfpauly",
+      "mergeCommit": {
+        "oid": "b22e4612bb6b1bac86c685f7d248f037caef233d"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJtaXUM6TUw-b",
+          "commit": {
+            "abbreviatedOid": "db486cb"
+          },
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-02T03:48:59Z",
+          "updatedAt": "2024-12-02T03:48:59Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "id": "PR_kwDOJtaXUM6DsPux",
+      "title": "Maximum chunk sizes",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/29",
+      "state": "OPEN",
+      "author": "tfpauly",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Limit to 16K chunk sizes. This currently defines it as the plaintext size, but we could also include the tag to be the full chunk length. I don't have a strong opinion here.\r\n\r\nCloses #7 ",
+      "createdAt": "2024-12-02T04:11:53Z",
+      "updatedAt": "2024-12-02T19:23:21Z",
+      "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "baseRefName": "main",
+      "baseRefOid": "a67ac5e8dd1abf672e612f4db8f93233d0fc4f86",
+      "headRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "headRefName": "tfpauly-patch-5",
+      "headRefOid": "9ec01d493e8916acfaaa59de6f14e3f5e24d8706",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOJtaXUM6TcfOK",
+          "commit": {
+            "abbreviatedOid": "9ec01d4"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-02T19:23:21Z",
+          "updatedAt": "2024-12-02T19:23:21Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "id": "PR_kwDOJtaXUM6DsSj8",
+      "title": "Explain negotiation",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/30",
+      "state": "OPEN",
+      "author": "tfpauly",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #5",
+      "createdAt": "2024-12-02T04:24:42Z",
+      "updatedAt": "2024-12-02T19:26:04Z",
+      "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "baseRefName": "main",
+      "baseRefOid": "a67ac5e8dd1abf672e612f4db8f93233d0fc4f86",
+      "headRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "headRefName": "tfpauly-patch-6",
+      "headRefOid": "4d63b5f8968c692b1029e1aaa53e3c1f8a484db6",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJtaXUM6Tcfz3",
+          "commit": {
+            "abbreviatedOid": "f897975"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-02T19:24:37Z",
+          "updatedAt": "2024-12-02T19:24:53Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "```suggestion\r\nan inconsistent view of which variant to use, which could be used to partition client anonymity sets.\r\n```",
+              "createdAt": "2024-12-02T19:24:37Z",
+              "updatedAt": "2024-12-02T19:24:54Z"
+            },
+            {
+              "originalPosition": 29,
+              "body": "```suggestion\r\nFalling back would allow clients to have inconsistent behavior that could be used to partition client anonymity sets.\r\n```",
+              "createdAt": "2024-12-02T19:24:51Z",
+              "updatedAt": "2024-12-02T19:24:54Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
