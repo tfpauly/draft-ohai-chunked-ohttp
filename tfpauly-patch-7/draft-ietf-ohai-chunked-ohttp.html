@@ -1610,20 +1610,20 @@ the response influences the timing and/or content of the request chunk.
 This is an interactive case.<a href="#section-7.2-3.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-7.2-4">In the interactive case, the Oblivious Gateway Resource Is able to
+<p id="section-7.2-4">In the interactive case, the Oblivious Gateway Resource can
 observe the round trip time to the Client, which can change the privacy
 assumptions of the system. Client implementations therefore need to be aware
-of the possibility that processing chunks might result in observable interactivity
-that could reduces the privacy protection that the protocol could otherwise provide.
+of the possibility that interactively processing chunks might reveal information to the
+Oblivious Gateway Resource that is otherwise kept private.
 For cases when this is unacceptable, the client can ensure that it never has an
 interactive exchange, either by not sending its request in multiple chunks, or
-by ensuring that the sending of those chunks is not based on the responses.
-Interactivity that is deliberate might be acceptable. For instance, the
+by ensuring that the sending of those chunks is not based on the responses.<a href="#section-7.2-4" class="pilcrow">¶</a></p>
+<p id="section-7.2-5">Interactivity that is deliberate might be acceptable. For instance, the
 100-continue feature in HTTP, which has the client withhold the body of a
 request until it receives a 100 Informational response, is not possible without
 an interactive exchange.  This highlights the risks involved in the use of this
 chunked encoding to adapt an existing HTTP-based interaction to use Oblivious HTTP
-as such an adaptation might not achieve expected privacy outcomes.<a href="#section-7.2-4" class="pilcrow">¶</a></p>
+as such an adaptation might not achieve expected privacy outcomes.<a href="#section-7.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
