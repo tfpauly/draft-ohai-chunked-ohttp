@@ -342,26 +342,44 @@ Without chunking, Oblivious HTTP involves a single request and response, with no
 further interactivity.  Using a chunked variant at both Client and Oblivious
 Gateway Resource creates the possibility that an exchange could lead to multiple
 rounds of interaction.  Information from early chunks from a peer could
-influence how an endpoint constructs later chunks of their message.
+influence how an endpoint constructs later chunks of their message.  However,
+the use of Chunked OHTTP does not necessarily mean that exchanges will involve
+interactivity.
 
-An Oblivious Gateway Resource could be able to observe the round trip time to
-the Client if the Client conditions the timing or content of chunks on what it
-receives in a response.
+Interactivity for Chunked OHTTP can be defined as any case in which the response
+can influence the timing or content of the request. To help explain this
+distinction, the following scenarios can be used to understand different
+modalities for requests and responses:
 
-Client implementations therefore need to be aware of the possibility that
-processing chunks might result in observable interactivity that could reduces
-the privacy protection that the protocol could otherwise provide.  Interactivity
-that is deliberate might be acceptable. For instance, the 100-continue feature
-in HTTP, which has the client withhold the body of a request until it receives a
-100 Informational response, is not possible without chunked encoding.  This
-highlights the risks involved in the use of this chunked encoding to adapt an
-existing HTTP-based interaction to use Oblivious HTTP as such an adaptation
-might not achieve expected privacy outcomes.
+- The request is sent as a single chunk, and the response is sent as a single
+  chunk. This is a non-interactive case, that is identical to the non-chunked
+  variant.
+- The request is sent as a single chunk, and the response is sent in multiple
+  chunks. This is a non-interactive case, since there is no possibility
+  that the client can influence its request based on the response content.
+- The request is sent in multiple chunks, but either all chunks are sent before
+  a response chunk is received, or the sending of the chunks is not influenced
+  by the response chunks. This is a non-interactive case, since again the
+  client's request is not influenced by any response content.
+- The request is sent in multiple chunks, at least one of which specifically
+  is sent after receiving a response chunk (or the complete response), where
+  the response influences the timing and/or content of the request chunk.
+  This is an interactive case.
 
-In order to prevent the Oblivious Gateway Resource from observing the round trip time
-to the client, client implementations can choose to not base the sending of request chunks based
-on received response chunks. These interactions can still benefit from chunked processing,
-without incurring additional observability risks.
+In the interactive case, the Oblivious Gateway Resource Is able to
+observe the round trip time to the Client, which can change the privacy
+assumptions of the system. Client implementations therefore need to be aware
+of the possibility that processing chunks might result in observable interactivity
+that could reduces the privacy protection that the protocol could otherwise provide.
+For cases when this is unacceptable, the client can ensure that it never has an
+interactive exchange, either by not sending its request in multiple chunks, or
+by ensuring that the sending of those chunks is not based on the responses.
+Interactivity that is deliberate might be acceptable. For instance, the
+100-continue feature in HTTP, which has the client withhold the body of a
+request until it receives a 100 Informational response, is not possible without
+an interactive exchange.  This highlights the risks involved in the use of this
+chunked encoding to adapt an existing HTTP-based interaction to use Oblivious HTTP
+as such an adaptation might not achieve expected privacy outcomes.
 
 # IANA Considerations
 
