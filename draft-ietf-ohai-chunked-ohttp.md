@@ -366,14 +366,15 @@ modalities for requests and responses:
   the response influences the timing and/or content of the request chunk.
   This is an interactive case.
 
-In the interactive case, the Oblivious Gateway Resource Is able to
+In the interactive case, the Oblivious Gateway Resource can
 observe the round trip time to the Client, which can change the privacy
 assumptions of the system. Client implementations therefore need to be aware
-of the possibility that processing chunks might result in observable interactivity
-that could reduces the privacy protection that the protocol could otherwise provide.
+of the possibility that interactively processing chunks might reveal information to the
+Oblivious Gateway Resource that is otherwise kept private.
 For cases when this is unacceptable, the client can ensure that it never has an
 interactive exchange, either by not sending its request in multiple chunks, or
 by ensuring that the sending of those chunks is not based on the responses.
+
 Interactivity that is deliberate might be acceptable. For instance, the
 100-continue feature in HTTP, which has the client withhold the body of a
 request until it receives a 100 Informational response, is not possible without
