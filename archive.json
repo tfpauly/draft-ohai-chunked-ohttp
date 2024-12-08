@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-05T01:03:27.611993+00:00",
+  "timestamp": "2024-12-08T01:08:52.151939+00:00",
   "repo": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
   "labels": [
     {
@@ -97,15 +97,15 @@
       "id": "I_kwDOJtaXUM5s-OaN",
       "title": "Consider restriction to only allow response after complete request",
       "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/3",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "tfpauly",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "In order to simplify analysis and deviate less from the original design of OHTTP, consider adding a restriction to only allow response after complete request.",
       "createdAt": "2023-07-31T02:21:13Z",
-      "updatedAt": "2023-09-19T00:17:34Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-06T17:44:56Z",
+      "closedAt": "2024-12-06T17:44:56Z",
       "comments": [
         {
           "author": "tfpauly",
@@ -148,6 +148,13 @@
           "body": "No, I don't think so. I can certainly imagine applications misusing this for performance reasons. It's like the equivalent of using AEAD plaintext before actually checking the tag for integrity.",
           "createdAt": "2023-09-19T00:17:33Z",
           "updatedAt": "2023-09-19T00:17:33Z"
+        },
+        {
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think our general trend here is to document the concern of interactivity, not to prevent it. See #31 ",
+          "createdAt": "2024-12-06T17:44:56Z",
+          "updatedAt": "2024-12-06T17:44:56Z"
         }
       ]
     },
@@ -317,15 +324,15 @@
       "id": "I_kwDOJtaXUM58gdP2",
       "title": "Describe large upload use case",
       "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/18",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "tfpauly",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Currently, OHTTP has no maximum size, so a server that is willing to accept large requests is forced to buffer unbounded messages before knowing if they can be decrypted, or if they will be served. Chunking allows the server to validate the HPKE encryption and request headers in the first chunk before accepting the rest of the request. Chunking also allows endpoints to write data out after decrypting, instead of holding the entire message in memory.",
       "createdAt": "2024-01-18T18:59:51Z",
-      "updatedAt": "2024-01-18T18:59:51Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-06T17:06:24Z",
+      "closedAt": "2024-12-06T17:06:24Z",
       "comments": []
     },
     {
@@ -1317,6 +1324,65 @@
               "body": "```suggestion\r\nFalling back would allow clients to have inconsistent behavior that could be used to partition client anonymity sets.\r\n```",
               "createdAt": "2024-12-02T19:24:51Z",
               "updatedAt": "2024-12-02T19:24:54Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "id": "PR_kwDOJtaXUM6EW0N2",
+      "title": "Explain interactivity case more clearly",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/31",
+      "state": "OPEN",
+      "author": "tfpauly",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-12-06T17:42:19Z",
+      "updatedAt": "2024-12-06T18:02:55Z",
+      "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "baseRefName": "main",
+      "baseRefOid": "a67ac5e8dd1abf672e612f4db8f93233d0fc4f86",
+      "headRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "headRefName": "tfpauly-patch-7",
+      "headRefOid": "cad52862ab30d1945930def8533dcafc7deaf482",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJtaXUM6UJn3t",
+          "commit": {
+            "abbreviatedOid": "cf4a4d8"
+          },
+          "author": "chris-wood",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-06T17:58:34Z",
+          "updatedAt": "2024-12-06T18:01:27Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "```suggestion\r\nIn the interactive case, the Oblivious Gateway Resource can\r\n```",
+              "createdAt": "2024-12-06T17:58:34Z",
+              "updatedAt": "2024-12-06T18:01:27Z"
+            },
+            {
+              "originalPosition": 52,
+              "body": "```suggestion\r\nof the possibility that interactively processing chunks might reveal information to the\r\nOblivious Gateway Resource that is otherwise kept private.\r\n```",
+              "createdAt": "2024-12-06T18:00:46Z",
+              "updatedAt": "2024-12-06T18:02:29Z"
+            },
+            {
+              "originalPosition": 56,
+              "body": "```suggestion\r\n\r\nInteractivity that is deliberate might be acceptable. For instance, the\r\n```",
+              "createdAt": "2024-12-06T18:01:01Z",
+              "updatedAt": "2024-12-06T18:01:27Z"
             }
           ]
         }
