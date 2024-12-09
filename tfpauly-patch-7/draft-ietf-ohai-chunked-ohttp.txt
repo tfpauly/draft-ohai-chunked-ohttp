@@ -414,7 +414,7 @@ Table of Contents
       to the non-chunked variant.
 
    *  The request is sent as a single chunk, and the response is sent in
-      multiple chunks.  This is a non-interactive case, since there is
+      multiple chunks.  This is a non-interactive case, because there is
       no possibility that the client can influence its request based on
       the response content.
 
