@@ -352,7 +352,7 @@ distinction, the following scenarios can be used to understand different
 modalities for requests and responses:
 
 - The request is sent as a single chunk, and the response is sent as a single
-  chunk. This is a non-interactive case, that is identical to the non-chunked
+  chunk. This is a non-interactive case that is identical to the non-chunked
   variant.
 - The request is sent as a single chunk, and the response is sent in multiple
   chunks. This is a non-interactive case, since there is no possibility
