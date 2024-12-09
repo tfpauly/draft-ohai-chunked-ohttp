@@ -111,8 +111,8 @@ Use cases that require the use of Chunked OHTTP SHOULD only use the chunked
 media types for their requests, to indicate that Chunked OHTTP is required.
 If the gateway unexpectedly does not support Chunked OHTTP, then the request
 will fail as if OHTTP as a whole were not supported. If clients retry requests
-with the non-chunked media type, it is possible for different clients to have
-an inconsistent view of which variant to use, which could be used to partition client anonymity sets.
+with the non-chunked media type, a gateway could partition client anonymity
+sets by rejecting some requests and accepting others.
 
 Chunked OHTTP requests and responses SHOULD include the
 `Incremental` header field {{!INCREMENTAL=I-D.kazuho-httpbis-incremental-http}}
