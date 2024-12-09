@@ -5,8 +5,8 @@
 OHAI Working Group                                              T. Pauly
 Internet-Draft                                                     Apple
 Intended status: Standards Track                              M. Thomson
-Expires: 5 June 2025                                             Mozilla
-                                                         2 December 2024
+Expires: 12 June 2025                                            Mozilla
+                                                         9 December 2024
 
 
                     Chunked Oblivious HTTP Messages
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 June 2025.
+   This Internet-Draft will expire on 12 June 2025.
 
 Copyright Notice
 
@@ -179,9 +179,8 @@ Table of Contents
    OHTTP is required.  If the gateway unexpectedly does not support
    Chunked OHTTP, then the request will fail as if OHTTP as a whole were
    not supported.  If clients retry requests with the non-chunked media
-   type, it is possible for different clients to have an inconsistent
-   view of which variant to use, which could be used to partition client
-   anonymity sets.
+   type, a gateway could partition client anonymity sets by rejecting
+   some requests and accepting others.
 
    Chunked OHTTP requests and responses SHOULD include the Incremental
    header field [INCREMENTAL] in order to signal to intermediaries (such
