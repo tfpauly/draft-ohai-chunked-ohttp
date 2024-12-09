@@ -410,7 +410,7 @@ Table of Contents
    understand different modalities for requests and responses:
 
    *  The request is sent as a single chunk, and the response is sent as
-      a single chunk.  This is a non-interactive case, that is identical
+      a single chunk.  This is a non-interactive case that is identical
       to the non-chunked variant.
 
    *  The request is sent as a single chunk, and the response is sent in
