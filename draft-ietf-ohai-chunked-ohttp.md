@@ -368,6 +368,11 @@ to the client, client implementations can choose to not base the sending of requ
 on received response chunks. These interactions can still benefit from chunked processing,
 without incurring additional observability risks.
 
+Interactivity does not inherently reduce replay risk unless the server
+explicitly verifies that a client is live (such as by having the client echo
+content from the response in its request).  A request that is generated
+interactively can be replayed by a malicious relay.
+
 # IANA Considerations
 
 This document updates the "Media Types" registry at
