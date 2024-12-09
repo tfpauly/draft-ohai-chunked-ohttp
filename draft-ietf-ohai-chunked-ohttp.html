@@ -1597,23 +1597,51 @@ using the expected sentinel value, "final", in the AAD.<a href="#section-7.1-3" 
 further interactivity.  Using a chunked variant at both Client and Oblivious
 Gateway Resource creates the possibility that an exchange could lead to multiple
 rounds of interaction.  Information from early chunks from a peer could
-influence how an endpoint constructs later chunks of their message.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
-<p id="section-7.2-2">An Oblivious Gateway Resource could be able to observe the round trip time to
-the Client if the Client conditions the timing or content of chunks on what it
-receives in a response.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
-<p id="section-7.2-3">Client implementations therefore need to be aware of the possibility that
-processing chunks might result in observable interactivity that could reduces
-the privacy protection that the protocol could otherwise provide.  Interactivity
-that is deliberate might be acceptable. For instance, the 100-continue feature
-in HTTP, which has the client withhold the body of a request until it receives a
-100 Informational response, is not possible without chunked encoding.  This
-highlights the risks involved in the use of this chunked encoding to adapt an
-existing HTTP-based interaction to use Oblivious HTTP as such an adaptation
-might not achieve expected privacy outcomes.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
-<p id="section-7.2-4">In order to prevent the Oblivious Gateway Resource from observing the round trip time
-to the client, client implementations can choose to not base the sending of request chunks based
-on received response chunks. These interactions can still benefit from chunked processing,
-without incurring additional observability risks.<a href="#section-7.2-4" class="pilcrow">¶</a></p>
+influence how an endpoint constructs later chunks of their message.  However,
+the use of Chunked OHTTP does not necessarily mean that exchanges will involve
+interactivity.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
+<p id="section-7.2-2">Interactivity for Chunked OHTTP can be defined as any case in which the response
+can influence the timing or content of the request. To help explain this
+distinction, the following scenarios can be used to understand different
+modalities for requests and responses:<a href="#section-7.2-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-7.2-3.1">
+            <p id="section-7.2-3.1.1">The request is sent as a single chunk, and the response is sent as a single
+chunk. This is a non-interactive case that is identical to the non-chunked
+variant.<a href="#section-7.2-3.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-7.2-3.2">
+            <p id="section-7.2-3.2.1">The request is sent as a single chunk, and the response is sent in multiple
+chunks. This is a non-interactive case, because there is no possibility
+that the client can influence its request based on the response content.<a href="#section-7.2-3.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-7.2-3.3">
+            <p id="section-7.2-3.3.1">The request is sent in multiple chunks, but either all chunks are sent before
+a response chunk is received, or the sending of the chunks is not influenced
+by the response chunks. This is a non-interactive case, since again the
+client's request is not influenced by any response content.<a href="#section-7.2-3.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-7.2-3.4">
+            <p id="section-7.2-3.4.1">The request is sent in multiple chunks, at least one of which specifically
+is sent after receiving -- and possibly processing -- a response chunk (or the complete response), where
+the response influences the timing and/or content of the request chunk.
+This is an interactive case.<a href="#section-7.2-3.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-7.2-4">In the interactive case, the Oblivious Gateway Resource can
+observe the round trip time to the Client, which can change the privacy
+assumptions of the system. Client implementations therefore need to be aware
+of the possibility that interactively processing chunks might reveal information to the
+Oblivious Gateway Resource that is otherwise kept private.<a href="#section-7.2-4" class="pilcrow">¶</a></p>
+<p id="section-7.2-5">For cases when interactivity introduces unacceptable risks, the client can ensure that it never has an
+interactive exchange, either by not sending its request in multiple chunks, or
+by ensuring that the sending of request chunks cannot be influenced by the response.<a href="#section-7.2-5" class="pilcrow">¶</a></p>
+<p id="section-7.2-6">Interactivity that is deliberate might be acceptable. For instance, the
+100-continue feature in HTTP, which has the client withhold the body of a
+request until it receives a 100 Informational response, is not possible without
+an interactive exchange.  This highlights the risks involved in the use of this
+chunked encoding to adapt an existing HTTP-based interaction to use Oblivious HTTP
+as such an adaptation might not achieve expected privacy outcomes.<a href="#section-7.2-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
