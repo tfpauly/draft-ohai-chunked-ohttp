@@ -371,7 +371,8 @@ observe the round trip time to the Client, which can change the privacy
 assumptions of the system. Client implementations therefore need to be aware
 of the possibility that interactively processing chunks might reveal information to the
 Oblivious Gateway Resource that is otherwise kept private.
-For cases when this is unacceptable, the client can ensure that it never has an
+
+For cases when interactivity introduces unacceptable risks, the client can ensure that it never has an
 interactive exchange, either by not sending its request in multiple chunks, or
 by ensuring that the sending of request chunks cannot be influenced by the response.
 
