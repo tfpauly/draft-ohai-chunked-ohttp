@@ -404,6 +404,11 @@ an interactive exchange.  This highlights the risks involved in the use of this
 chunked encoding to adapt an existing HTTP-based interaction to use Oblivious HTTP
 as such an adaptation might not achieve expected privacy outcomes.
 
+Interactivity does not inherently reduce replay risk unless the server
+explicitly verifies that a client is live (such as by having the client echo
+content from the response in its request).  A request that is generated
+interactively can be replayed by a malicious relay.
+
 # IANA Considerations
 
 This document updates the "Media Types" registry at
