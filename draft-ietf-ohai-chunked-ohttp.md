@@ -362,7 +362,7 @@ modalities for requests and responses:
   by the response chunks. This is a non-interactive case, since again the
   client's request is not influenced by any response content.
 - The request is sent in multiple chunks, at least one of which specifically
-  is sent after receiving a response chunk (or the complete response), where
+  is sent after receiving -- and possibly processing -- a response chunk (or the complete response), where
   the response influences the timing and/or content of the request chunk.
   This is an interactive case.
 
