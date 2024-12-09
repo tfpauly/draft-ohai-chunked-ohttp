@@ -355,7 +355,7 @@ modalities for requests and responses:
   chunk. This is a non-interactive case that is identical to the non-chunked
   variant.
 - The request is sent as a single chunk, and the response is sent in multiple
-  chunks. This is a non-interactive case, since there is no possibility
+  chunks. This is a non-interactive case, because there is no possibility
   that the client can influence its request based on the response content.
 - The request is sent in multiple chunks, but either all chunks are sent before
   a response chunk is received, or the sending of the chunks is not influenced
