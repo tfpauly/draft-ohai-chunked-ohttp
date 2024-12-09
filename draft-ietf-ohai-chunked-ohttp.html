@@ -1475,12 +1475,12 @@ sealed_chunk_len = varint_encode(len(sealed_chunk))
 non_final_chunk = concat(sealed_chunk_len, sealed_chunk)
 </pre><a href="#section-6.1-4" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1-5">The final chunk in a request uses an AAD of the string "final".<a href="#section-6.1-5" class="pilcrow">¶</a></p>
+<p id="section-6.1-5">The final chunk in a request uses an AAD of the string "final" and is prefixed
+with a zero length.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.1-6">
 <pre>
 sealed_final_chunk = sctxt.Seal("final", chunk)
-sealed_final_chunk_len = varint_encode(len(sealed_final_chunk))
-final_chunk = concat(sealed_final_chunk_len, sealed_final_chunk)
+final_chunk = concat(varint_encode(0), sealed_final_chunk)
 </pre><a href="#section-6.1-6" class="pilcrow">¶</a>
 </div>
 <p id="section-6.1-7">HPKE already maintains a sequence number for sealing operations as part of
@@ -1533,13 +1533,13 @@ non_final_chunk = concat(sealed_chunk_len, sealed_chunk)
 counter++
 </pre><a href="#section-6.2-8" class="pilcrow">¶</a>
 </div>
-<p id="section-6.2-9">The final chunk in a response uses an AAD of the string "final".<a href="#section-6.2-9" class="pilcrow">¶</a></p>
+<p id="section-6.2-9">The final chunk in a response uses an AAD of the string "final" and is prefixed
+with a zero length.<a href="#section-6.2-9" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.2-10">
 <pre>
 chunk_nonce = aead_nonce XOR encode(Nn, counter)
 sealed_final_chunk = Seal(aead_key, chunk_nonce, "final", chunk)
-sealed_final_chunk_len = varint_encode(len(sealed_final_chunk))
-final_chunk = concat(sealed_final_chunk_len, sealed_final_chunk)
+final_chunk = concat(varint_encode(0), sealed_final_chunk)
 </pre><a href="#section-6.2-10" class="pilcrow">¶</a>
 </div>
 <p id="section-6.2-11">If the counter reached the maximum value that can be held in an
