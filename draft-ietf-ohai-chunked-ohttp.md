@@ -373,7 +373,7 @@ of the possibility that interactively processing chunks might reveal information
 Oblivious Gateway Resource that is otherwise kept private.
 For cases when this is unacceptable, the client can ensure that it never has an
 interactive exchange, either by not sending its request in multiple chunks, or
-by ensuring that the sending of those chunks is not based on the responses.
+by ensuring that the sending of request chunks cannot be influenced by the response.
 
 Interactivity that is deliberate might be acceptable. For instance, the
 100-continue feature in HTTP, which has the client withhold the body of a
