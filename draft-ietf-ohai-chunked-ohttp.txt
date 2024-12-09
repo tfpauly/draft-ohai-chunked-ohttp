@@ -5,8 +5,8 @@
 OHAI Working Group                                              T. Pauly
 Internet-Draft                                                     Apple
 Intended status: Standards Track                              M. Thomson
-Expires: 5 June 2025                                             Mozilla
-                                                         2 December 2024
+Expires: 12 June 2025                                            Mozilla
+                                                         9 December 2024
 
 
                     Chunked Oblivious HTTP Messages
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 June 2025.
+   This Internet-Draft will expire on 12 June 2025.
 
 Copyright Notice
 
@@ -191,6 +191,11 @@ Table of Contents
    Incremental: ?1
 
    <content is an Encapsulated Request>
+
+   Implementations MUST support receiving chunks that contain 2^14
+   (16384) octets of data prior to encapsulation.  Senders of chunks
+   SHOULD limit their chunks to this size, unless they are aware of
+   support for larger sizes by the receiving party.
 
 4.  Request Format
 
