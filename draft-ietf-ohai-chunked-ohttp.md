@@ -254,12 +254,12 @@ sealed_chunk_len = varint_encode(len(sealed_chunk))
 non_final_chunk = concat(sealed_chunk_len, sealed_chunk)
 ~~~
 
-The final chunk in a request uses an AAD of the string "final".
+The final chunk in a request uses an AAD of the string "final" and is prefixed
+with a zero length.
 
 ~~~
 sealed_final_chunk = sctxt.Seal("final", chunk)
-sealed_final_chunk_len = varint_encode(len(sealed_final_chunk))
-final_chunk = concat(sealed_final_chunk_len, sealed_final_chunk)
+final_chunk = concat(varint_encode(0), sealed_final_chunk)
 ~~~
 
 HPKE already maintains a sequence number for sealing operations as part of
@@ -308,13 +308,13 @@ non_final_chunk = concat(sealed_chunk_len, sealed_chunk)
 counter++
 ~~~
 
-The final chunk in a response uses an AAD of the string "final".
+The final chunk in a response uses an AAD of the string "final" and is prefixed
+with a zero length.
 
 ~~~
 chunk_nonce = aead_nonce XOR encode(Nn, counter)
 sealed_final_chunk = Seal(aead_key, chunk_nonce, "final", chunk)
-sealed_final_chunk_len = varint_encode(len(sealed_final_chunk))
-final_chunk = concat(sealed_final_chunk_len, sealed_final_chunk)
+final_chunk = concat(varint_encode(0), sealed_final_chunk)
 ~~~
 
 If the counter reached the maximum value that can be held in an
