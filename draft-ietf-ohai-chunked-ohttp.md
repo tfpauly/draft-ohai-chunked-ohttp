@@ -103,7 +103,16 @@ Notational conventions from {{OHTTP}} are used in this document.
 
 Chunked Oblivious HTTP defines different media than the non-chunked variant. These
 media types are "message/ohttp-chunked-req" (defined in {{iana-req}}) and
-"message/ohttp-chunked-res" (defined in {{iana-res}}).
+"message/ohttp-chunked-res" (defined in {{iana-res}}). If a request uses the
+media type "message/ohttp-chunked-req", a successful corresponding response
+MUST use the media type "message/ohttp-chunked-res".
+
+Use cases that require the use of Chunked OHTTP SHOULD only use the chunked
+media types for their requests, to indicate that Chunked OHTTP is required.
+If the gateway unexpectedly does not support Chunked OHTTP, then the request
+will fail as if OHTTP as a whole were not supported. If clients retry requests
+with the non-chunked media type, a gateway could partition client anonymity
+sets by rejecting some requests and accepting others.
 
 Chunked OHTTP requests and responses SHOULD include the
 `Incremental` header field {{!INCREMENTAL=I-D.kazuho-httpbis-incremental-http}}
@@ -321,6 +330,13 @@ delivery and processing of messages, it does not add forward secrecy between
 chunks. As with the non-chunked variant, forward secrecy is only provided when
 changing the key configuration. This is particularly important when chunking is
 used to enable interactivity.
+
+The use of Chunked OHTTP can be considered part of the configuration a client
+knows about for a particular gateway. As such, the use of Chunked OHTTP falls
+under the same consistency privacy considerations as the rest of the configuration
+(see {{Section 7 of OHTTP}}). Specifically, clients SHOULD NOT fall back from
+Chunked OHTTP to the non-chunked variant if they are configured to used chunking.
+Falling back would allow clients to have inconsistent behavior that could be used to partition client anonymity sets.
 
 ## Message Truncation
 
