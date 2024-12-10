@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-08T01:08:52.151939+00:00",
+  "timestamp": "2024-12-10T01:04:20.596038+00:00",
   "repo": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
   "labels": [
     {
@@ -163,7 +163,7 @@
       "id": "I_kwDOJtaXUM5uCXWI",
       "title": "Negotiating use",
       "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/5",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "martinthomson",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -172,8 +172,8 @@
       ],
       "body": "We need a section on how a client or gateway might indicate that they are able to use this.\r\n\r\nUse of something like this falls under the general configuration of a gateway, so that consistency requirements apply.  If clients have an inconsistent view of support for chunking, then they will be more identifiable as a result.  We need language about that too.",
       "createdAt": "2023-08-11T02:32:49Z",
-      "updatedAt": "2024-12-02T19:17:09Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-09T04:24:54Z",
+      "closedAt": "2024-12-09T04:24:54Z",
       "comments": []
     },
     {
@@ -181,7 +181,7 @@
       "id": "I_kwDOJtaXUM5uRM1C",
       "title": "Maximum chunk size",
       "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/7",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "martinthomson",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -190,8 +190,8 @@
       ],
       "body": "Varints for lengths have this problem where they can be very large, requiring a lot of memory. Even TLS has this problem and it only has 16k chunks. It would be good to have some way to negotiate chunk size. This ends up being a little weird though.\r\n\r\nIf you have too many size options, that leaks client details in a way that might be identifying.\r\n\r\nIf you negotiate on the outside of the encapsulation, the relay has to know to forward it. If you negotiate on the inside, it might end up going to the target and not the gateway.\r\n\r\nThat is, this is much like #5: we will need to be careful.",
       "createdAt": "2023-08-14T15:20:37Z",
-      "updatedAt": "2024-12-02T03:53:06Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-09T02:05:39Z",
+      "closedAt": "2024-12-09T02:05:39Z",
       "comments": [
         {
           "author": "tfpauly",
@@ -306,7 +306,7 @@
       "id": "I_kwDOJtaXUM58aSQd",
       "title": "Pseudocode for decoding",
       "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/16",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "martinthomson",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -315,9 +315,17 @@
       ],
       "body": "Decoding is a tiny bit more fiddly than encoding.  It might be worth adding an appendix with the appropriate logic.\r\n\r\n(I still need to implement it myself, FWIW.)",
       "createdAt": "2024-01-18T00:50:59Z",
-      "updatedAt": "2024-03-11T19:38:56Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2024-12-09T22:55:10Z",
+      "closedAt": "2024-12-09T22:55:10Z",
+      "comments": [
+        {
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Tommy and I discussed this and the main outstanding problem that might exist is on the sending side.  How to ensure that you correctly chunk the end of the incoming stream is a little tricky.  You can try to read ahead, but that's not always going to work out.  Chances are, you will end up with a zero-sized chunk at the end of a stream, at least sometimes.  That's probably enough of a fine detail that we don't need to say much.",
+          "createdAt": "2024-12-09T22:55:10Z",
+          "updatedAt": "2024-12-09T22:55:10Z"
+        }
+      ]
     },
     {
       "number": 18,
@@ -490,15 +498,15 @@
       "id": "I_kwDOJtaXUM6a5Kas",
       "title": "Discuss interaction of replayability and interactivity",
       "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/issues/27",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "tfpauly",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/25#pullrequestreview-2370940482\r\n\r\nFrom @martinthomson 's comment:\r\n\r\n> If a message can be replayed, then how that is replayed might be exploited by a malicious relay to effect change.\r\n> \r\n> Maybe we need to do a little more analysis on that aspect of this. A section on interactivity and replay might help expound on those risks.\r\n\r\n",
       "createdAt": "2024-10-19T02:43:40Z",
-      "updatedAt": "2024-10-19T02:45:35Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-09T04:30:12Z",
+      "closedAt": "2024-12-09T04:30:12Z",
       "comments": [
         {
           "author": "tfpauly",
@@ -506,6 +514,20 @@
           "body": "My understanding is that in the cases where there is no interaction, just a chunked response after a request completes, there isn't any new impact of a malicious replay by a relay (assuming the request is idempotent).\r\n\r\nIn the interactive case, agreed that more analysis would be good.",
           "createdAt": "2024-10-19T02:45:34Z",
           "updatedAt": "2024-10-19T02:45:34Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The core problem is that interactivity is really something that a client decides to do.  Though a server can observe the effect (we've covered that in the interactivity text we have now) that doesn't make interactive cases safe from replay.  Consider the case where there is a 100-continue in a request.  If that request is completed, it can still be replayed by the relay.  Its interactivity did not make it safer.\r\n\r\nNote that a interactivity is one of the things that TLS depends on, so some people might assume that this design gains similar benefits to what TLS provides.  Because we don't build in a dependency on interactivity, we don't get the liveness guarantees that TLS does.\r\n\r\nI think that's all there really is to say about that. I've spent a bit of time thinking about it, but I haven't come up with anything else.",
+          "createdAt": "2024-12-09T03:42:58Z",
+          "updatedAt": "2024-12-09T03:42:58Z"
+        },
+        {
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks for the explanation, that makes sense!",
+          "createdAt": "2024-12-09T04:26:40Z",
+          "updatedAt": "2024-12-09T04:26:40Z"
         }
       ]
     }
@@ -1241,24 +1263,26 @@
       "id": "PR_kwDOJtaXUM6DsPux",
       "title": "Maximum chunk sizes",
       "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/29",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "tfpauly",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Limit to 16K chunk sizes. This currently defines it as the plaintext size, but we could also include the tag to be the full chunk length. I don't have a strong opinion here.\r\n\r\nCloses #7 ",
       "createdAt": "2024-12-02T04:11:53Z",
-      "updatedAt": "2024-12-02T19:23:21Z",
+      "updatedAt": "2024-12-09T02:05:38Z",
       "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
       "baseRefName": "main",
       "baseRefOid": "a67ac5e8dd1abf672e612f4db8f93233d0fc4f86",
       "headRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
       "headRefName": "tfpauly-patch-5",
       "headRefOid": "9ec01d493e8916acfaaa59de6f14e3f5e24d8706",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-12-09T02:05:38Z",
+      "mergedAt": "2024-12-09T02:05:38Z",
+      "mergedBy": "martinthomson",
+      "mergeCommit": {
+        "oid": "50ce865b88d429987cc86698d3bf05cb3c229eab"
+      },
       "comments": [],
       "reviews": [
         {
@@ -1273,6 +1297,19 @@
           "createdAt": "2024-12-02T19:23:21Z",
           "updatedAt": "2024-12-02T19:23:21Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOJtaXUM6UQ9cH",
+          "commit": {
+            "abbreviatedOid": "9ec01d4"
+          },
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-09T02:05:32Z",
+          "updatedAt": "2024-12-09T02:05:32Z",
+          "comments": []
         }
       ]
     },
@@ -1281,24 +1318,26 @@
       "id": "PR_kwDOJtaXUM6DsSj8",
       "title": "Explain negotiation",
       "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/30",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "tfpauly",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Closes #5",
       "createdAt": "2024-12-02T04:24:42Z",
-      "updatedAt": "2024-12-02T19:26:04Z",
+      "updatedAt": "2024-12-09T04:24:54Z",
       "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
       "baseRefName": "main",
       "baseRefOid": "a67ac5e8dd1abf672e612f4db8f93233d0fc4f86",
       "headRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
       "headRefName": "tfpauly-patch-6",
-      "headRefOid": "4d63b5f8968c692b1029e1aaa53e3c1f8a484db6",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "e7fef270f12d87898cc84366dd8f5bc2446bc6d6",
+      "closedAt": "2024-12-09T04:24:53Z",
+      "mergedAt": "2024-12-09T04:24:53Z",
+      "mergedBy": "tfpauly",
+      "mergeCommit": {
+        "oid": "abc5cdb70c80aab0658e4c61069a430509d8d124"
+      },
       "comments": [],
       "reviews": [
         {
@@ -1326,6 +1365,26 @@
               "updatedAt": "2024-12-02T19:24:54Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOJtaXUM6UQ_Ui",
+          "commit": {
+            "abbreviatedOid": "4d63b5f"
+          },
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "This seems good.  Just a rewording tweak in a suggestion.",
+          "createdAt": "2024-12-09T02:07:51Z",
+          "updatedAt": "2024-12-09T02:08:29Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\r\nwill fail as if OHTTP as a whole were not supported. If clients retry requests\r\nwith the non-chunked media type, a gateway could partition client anonymity\r\nsets by rejecting some requests and accepting others.\r\n```",
+              "createdAt": "2024-12-09T02:07:52Z",
+              "updatedAt": "2024-12-09T02:08:29Z"
+            }
+          ]
         }
       ]
     },
@@ -1334,24 +1393,26 @@
       "id": "PR_kwDOJtaXUM6EW0N2",
       "title": "Explain interactivity case more clearly",
       "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/31",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "tfpauly",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2024-12-06T17:42:19Z",
-      "updatedAt": "2024-12-06T18:02:55Z",
+      "updatedAt": "2024-12-09T04:25:16Z",
       "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
       "baseRefName": "main",
       "baseRefOid": "a67ac5e8dd1abf672e612f4db8f93233d0fc4f86",
       "headRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
       "headRefName": "tfpauly-patch-7",
-      "headRefOid": "cad52862ab30d1945930def8533dcafc7deaf482",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "56ac910c403e0d3a4b7e209b7e0c0d6a61e02559",
+      "closedAt": "2024-12-09T04:25:16Z",
+      "mergedAt": "2024-12-09T04:25:16Z",
+      "mergedBy": "tfpauly",
+      "mergeCommit": {
+        "oid": "db3b1bf87188e56e056e7ea4302458ee93da8bec"
+      },
       "comments": [],
       "reviews": [
         {
@@ -1385,6 +1446,134 @@
               "updatedAt": "2024-12-06T18:01:27Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOJtaXUM6URLwx",
+          "commit": {
+            "abbreviatedOid": "cad5286"
+          },
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "This is a good addition.",
+          "createdAt": "2024-12-09T02:50:04Z",
+          "updatedAt": "2024-12-09T02:56:45Z",
+          "comments": [
+            {
+              "originalPosition": 55,
+              "body": "```suggestion\r\nby ensuring that the sending of request chunks cannot be influenced by the response.\r\n```",
+              "createdAt": "2024-12-09T02:50:04Z",
+              "updatedAt": "2024-12-09T02:56:45Z"
+            },
+            {
+              "originalPosition": 53,
+              "body": "```suggestion\r\n\r\nFor cases when interactivity introduces unacceptable risks, the client can ensure that it never has an\r\n```",
+              "createdAt": "2024-12-09T02:50:24Z",
+              "updatedAt": "2024-12-09T02:56:45Z"
+            },
+            {
+              "originalPosition": 34,
+              "body": "```suggestion\r\n  chunk. This is a non-interactive case that is identical to the non-chunked\r\n```",
+              "createdAt": "2024-12-09T02:51:41Z",
+              "updatedAt": "2024-12-09T02:56:45Z"
+            },
+            {
+              "originalPosition": 37,
+              "body": "```suggestion\r\n  chunks. This is a non-interactive case, because there is no possibility\r\n```",
+              "createdAt": "2024-12-09T02:51:56Z",
+              "updatedAt": "2024-12-09T02:56:45Z"
+            },
+            {
+              "originalPosition": 44,
+              "body": "```suggestion\r\n  is sent after receiving -- and possibly processing -- a response chunk (or the complete response), where\r\n```",
+              "createdAt": "2024-12-09T02:53:18Z",
+              "updatedAt": "2024-12-09T02:56:45Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "id": "PR_kwDOJtaXUM6EelT1",
+      "title": "Interactivity and replay",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/32",
+      "state": "MERGED",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Interactivity doesn't inherently help.\r\n\r\nCloses #27.",
+      "createdAt": "2024-12-09T04:08:23Z",
+      "updatedAt": "2024-12-09T04:30:11Z",
+      "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "baseRefName": "main",
+      "baseRefOid": "db3b1bf87188e56e056e7ea4302458ee93da8bec",
+      "headRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "headRefName": "interactive-replay",
+      "headRefOid": "8aea4b83728328f2418e1d0f19f11a3eedde4ad1",
+      "closedAt": "2024-12-09T04:30:11Z",
+      "mergedAt": "2024-12-09T04:30:11Z",
+      "mergedBy": "tfpauly",
+      "mergeCommit": {
+        "oid": "bd72928617d23d41fe5d24bd7471698887fd7269"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJtaXUM6UR197",
+          "commit": {
+            "abbreviatedOid": "8aea4b8"
+          },
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-09T04:30:05Z",
+          "updatedAt": "2024-12-09T04:30:05Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "id": "PR_kwDOJtaXUM6EnDSQ",
+      "title": "Fix the pseudocode for the final chunk",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/33",
+      "state": "MERGED",
+      "author": "martinthomson",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We were including the length of that chunk, but we should be including a zero.",
+      "createdAt": "2024-12-09T21:53:07Z",
+      "updatedAt": "2024-12-09T21:58:57Z",
+      "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "baseRefName": "main",
+      "baseRefOid": "bd72928617d23d41fe5d24bd7471698887fd7269",
+      "headRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "headRefName": "final-chunk-len",
+      "headRefOid": "3eddbcbf805625e01ee12484002f1e3f70b73afd",
+      "closedAt": "2024-12-09T21:58:57Z",
+      "mergedAt": "2024-12-09T21:58:57Z",
+      "mergedBy": "tfpauly",
+      "mergeCommit": {
+        "oid": "03d98be2658f1b54b8da6cfd9e5f24e7a0815a36"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJtaXUM6UbXVK",
+          "commit": {
+            "abbreviatedOid": "3eddbcb"
+          },
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-09T21:58:22Z",
+          "updatedAt": "2024-12-09T21:58:22Z",
+          "comments": []
         }
       ]
     }
