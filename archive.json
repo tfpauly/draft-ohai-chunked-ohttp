@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-10T01:04:20.596038+00:00",
+  "timestamp": "2024-12-12T01:02:58.974917+00:00",
   "repo": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
   "labels": [
     {
@@ -289,15 +289,13 @@
       "state": "OPEN",
       "author": "chris-wood",
       "authorAssociation": "CONTRIBUTOR",
-      "assignees": [
-        "chris-wood"
-      ],
+      "assignees": [],
       "labels": [
         "ready for text"
       ],
       "body": "We should probably have some!",
       "createdAt": "2023-09-18T20:38:34Z",
-      "updatedAt": "2024-12-02T19:15:48Z",
+      "updatedAt": "2024-12-10T17:30:43Z",
       "closedAt": null,
       "comments": []
     },
@@ -1505,7 +1503,7 @@
       "labels": [],
       "body": "Interactivity doesn't inherently help.\r\n\r\nCloses #27.",
       "createdAt": "2024-12-09T04:08:23Z",
-      "updatedAt": "2024-12-09T04:30:11Z",
+      "updatedAt": "2024-12-10T03:04:27Z",
       "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
       "baseRefName": "main",
       "baseRefOid": "db3b1bf87188e56e056e7ea4302458ee93da8bec",
