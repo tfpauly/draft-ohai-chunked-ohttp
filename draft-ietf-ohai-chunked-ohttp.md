@@ -325,9 +325,9 @@ Therefore, the response MUST NOT use `2^Nn` or more chunks.
 For successful decryption, the sender and receiver need to encode the counter
 to the same binary values.
 
-The `encode(Nn, counter)` function must encode the counter in Big Endian
-encoding. If counter is shorter than `Nn`, it should be padded by prefixing
-zero bytes.
+The `encode(Nn, counter)` function must encode the counter as a big-endian
+integer. If the length of the counter is shorter than `Nn`, it should be padded by
+prefixing zero bytes.
 
 # Security Considerations {#security}
 
