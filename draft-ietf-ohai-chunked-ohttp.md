@@ -322,6 +322,13 @@ integer with `Nn` bits (that maximum being `2^Nn`), where `Nn` is the
 length of the AEAD nonce, the `chunk_nonce` would wrap and be reused.
 Therefore, the response MUST NOT use `2^Nn` or more chunks.
 
+For successful decryption, the sender and receiver need to encode the counter
+to the same binary values.
+
+The `encode(Nn, counter)` function must encode the counter as a big-endian
+integer. If the length of the counter is shorter than `Nn`, it should be padded by
+prefixing zero bytes.
+
 # Security Considerations {#security}
 
 In general, Chunked OHTTP inherits the same security considerations as Oblivious
