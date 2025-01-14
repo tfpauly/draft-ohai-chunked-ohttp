@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-12T01:04:00.921910+00:00",
+  "timestamp": "2025-01-14T00:55:44.612847+00:00",
   "repo": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
   "labels": [
     {
@@ -1572,6 +1572,61 @@
           "createdAt": "2024-12-09T21:58:22Z",
           "updatedAt": "2024-12-09T21:58:22Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "id": "PR_kwDOJtaXUM6HguDw",
+      "title": "Add details on counter encoding",
+      "url": "https://github.com/ietf-wg-ohai/draft-ohai-chunked-ohttp/pull/34",
+      "state": "OPEN",
+      "author": "willemschots",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "First of all, thanks for the great work on this Draft RFC, it's been very useful so far!\r\n\r\nI've been working on implementing chunked responses and I would suggest to add a bit more detail on the counter encoding.\r\n\r\nIf I understand correctly, senders and receivers will need to use the same encoding to end up with the same `chunk_nonce`. To maintain compatibility between different implementations I think it would be good to have this encoding spelled out in the RFC.\r\n\r\nIn the PR I suggest we specify to use Big Endian encoding, but that's just to illustrate the level of detail I'm suggesting. If a different encoding is more appropriate, I'd be happy to make changes.\r\n\r\n",
+      "createdAt": "2025-01-13T10:37:17Z",
+      "updatedAt": "2025-01-13T17:20:30Z",
+      "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
+      "baseRefName": "main",
+      "baseRefOid": "03d98be2658f1b54b8da6cfd9e5f24e7a0815a36",
+      "headRepository": "willemschots/draft-ohai-chunked-ohttp",
+      "headRefName": "patch-1",
+      "headRefOid": "6ad9f27d81713223dc6700f75e8b3962bf9c6533",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "willemschots",
+          "authorAssociation": "NONE",
+          "body": "Top! Have included your suggested text, flows a bit better :+1: ",
+          "createdAt": "2025-01-13T17:20:28Z",
+          "updatedAt": "2025-01-13T17:20:28Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJtaXUM6X07ui",
+          "commit": {
+            "abbreviatedOid": "720db7b"
+          },
+          "author": "tfpauly",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "Thanks for pointing out this area for clarification! Totally agree that is useful. I added a suggestion for the text to align a bit more with what RFC 9180 says for the equivalent counter.",
+          "createdAt": "2025-01-13T16:54:05Z",
+          "updatedAt": "2025-01-13T16:54:49Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "```suggestion\r\nThe `encode(Nn, counter)` function must encode the counter as a big-endian\r\ninteger. If the length of the counter is shorter than `Nn`, it should be padded by\r\nprefixing zero bytes.\r\n```",
+              "createdAt": "2025-01-13T16:54:05Z",
+              "updatedAt": "2025-01-13T16:54:49Z"
+            }
+          ]
         }
       ]
     }
