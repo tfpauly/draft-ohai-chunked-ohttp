@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-28T00:56:43.892691+00:00",
+  "timestamp": "2025-01-30T00:55:57.169956+00:00",
   "repo": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
   "labels": [
     {
@@ -1587,7 +1587,7 @@
       "labels": [],
       "body": "First of all, thanks for the great work on this Draft RFC, it's been very useful so far!\r\n\r\nI've been working on implementing chunked responses and I would suggest to add a bit more detail on the counter encoding.\r\n\r\nIf I understand correctly, senders and receivers will need to use the same encoding to end up with the same `chunk_nonce`. To maintain compatibility between different implementations I think it would be good to have this encoding spelled out in the RFC.\r\n\r\nIn the PR I suggest we specify to use Big Endian encoding, but that's just to illustrate the level of detail I'm suggesting. If a different encoding is more appropriate, I'd be happy to make changes.\r\n\r\n",
       "createdAt": "2025-01-13T10:37:17Z",
-      "updatedAt": "2025-01-13T17:20:30Z",
+      "updatedAt": "2025-01-29T01:59:32Z",
       "baseRepository": "ietf-wg-ohai/draft-ohai-chunked-ohttp",
       "baseRefName": "main",
       "baseRefOid": "03d98be2658f1b54b8da6cfd9e5f24e7a0815a36",
@@ -1627,6 +1627,19 @@
               "updatedAt": "2025-01-13T16:54:49Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOJtaXUM6ZxHdR",
+          "commit": {
+            "abbreviatedOid": "6ad9f27"
+          },
+          "author": "martinthomson",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "It's indirect, but I don't think we need this:\r\n\r\nRFC 9458 says: \r\n\r\n> Encoding an integer to a sequence of bytes in network byte order is described using the function encode(n, v), where n is the number of bytes and v is the integer value.\r\n\r\nI think that is clear enough (it could be clearer, but that's not something that is worth fixing here and now in my view).\r\n\r\nThis change isn't ideally placed either.",
+          "createdAt": "2025-01-29T01:59:32Z",
+          "updatedAt": "2025-01-29T01:59:32Z",
+          "comments": []
         }
       ]
     }
